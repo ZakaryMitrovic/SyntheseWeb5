@@ -9,7 +9,7 @@ const Login = () =>{
     };
 
     return (
-        <div>
+        <div className="Login">
             <h1>Login</h1>
             <GoogleButton onClick={HandleGoogleSignIn}/>
         </div>
