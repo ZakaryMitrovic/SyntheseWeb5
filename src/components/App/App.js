@@ -2,14 +2,14 @@ import { RouterProvider, createBrowserRouter, Navigate } from "react-router-dom"
 import Layout from "../Layout/Layout";
 import Login from "../Login/Login";
 import TableauBord from "../TableauBord/TableauBord";
-import Projets from "../Projets/Projets";
+import CreerProjets from "../Projets/CreerProjets";
 import Header from "../Header/Header";
 import { authContexte } from "../../Contexte/authContexte";
 import { useContext } from "react";
 
 
 const App = () =>{
-    const ctx = useContext(authContexte);
+  const ctx = useContext(authContexte);
   console.log(ctx.user);
   const routes = !ctx.user ? [
 	{
@@ -26,7 +26,7 @@ const App = () =>{
 		},
         {
             path: 'creerprojet',
-            element: <Projets/>
+            element: <CreerProjets/>
         }
 	  ]
 	},
