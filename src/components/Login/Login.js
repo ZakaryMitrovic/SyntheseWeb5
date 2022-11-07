@@ -1,12 +1,19 @@
 import GoogleButton from "react-google-button";
-import React from 'react';
-
+import { async } from "@firebase/util";
+import React, { useContext, useState } from "react";
+import { authContexte } from "../../Contexte/authContexte";
 const Login = () =>{
-    return(
+    const ctx = useContext(authContexte);
+    const HandleGoogleSignIn = async () => {
+         ctx.login();
+    };
+
+    return (
         <div>
-            <h1>Sign in</h1>
-            <GoogleButton/>
+            <h1>Login</h1>
+            <GoogleButton onClick={HandleGoogleSignIn}/>
         </div>
     );
+
 };
 export default Login;

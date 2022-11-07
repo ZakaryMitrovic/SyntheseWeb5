@@ -6,7 +6,7 @@ const Header = (props) => {
   const ctx = useContext(authContexte);
 
   let isAuth = false;
-  if (ctx.user !== undefined) {
+  if (ctx.user != undefined) {
     isAuth = true;
   }
 
@@ -18,12 +18,12 @@ const Header = (props) => {
 
   return (
     <ul className="nav nav-tabs">
-      <li className="nav-item" style={{display:(isAuth ? "block" : "block")}}>
+      <li className="nav-item" style={{display:(isAuth ? "none" : "block")}}>
         <Link className="nav-link" to="/login">
           Authentification
         </Link>
       </li>
-      <li className="nav-item" style={{display:(isAuth ? "block" : "block")}}>
+      <li className="nav-item" style={{display:(isAuth ? "block" : "none")}}>
         <Link className="nav-link" to="/accueil">
           Accueil
         </Link>
@@ -32,7 +32,7 @@ const Header = (props) => {
       <Link style={{display:(isAuth ? "block" : "none")}} className="nav-link" to="/creerprojet">Créer un Projet</Link>
       </li>
       <li className="nav-item">
-        <button onClick={e=>btnDeconnexion(e)} style={{display:(isAuth ? "block" : "block")}} className="nav-link">Déconnexion</button>
+        <button onClick={e=>btnDeconnexion(e)} style={{display:(isAuth ? "block" : "none")}} className="nav-link">Déconnexion</button>
       </li>
     </ul>
   );
