@@ -4,6 +4,8 @@ import Login from "../Login/Login";
 import TableauBord from "../TableauBord/TableauBord";
 import CreerProjets from "../Projets/CreerProjets";
 import Membres from "../Membres/Membres";
+import CreerClient from "../Client/CreerClient";
+import DetailsClient from "../Client/DetailsClient";
 import Header from "../Header/Header";
 import { authContexte } from "../../Contexte/authContexte";
 import { useContext } from "react";
@@ -33,6 +35,18 @@ const App = () =>{
     {
       path: 'membres',
       element: <Membres/>
+    },
+    {
+            path: 'creerprojet',
+            element: <CreerProjets/>
+    },
+    {
+            path: 'creerClient',
+            element: <CreerClient/>
+    },
+    {
+            path: 'detailsClient',
+            element: <DetailsClient/>
     }
 	  ]
 	},
