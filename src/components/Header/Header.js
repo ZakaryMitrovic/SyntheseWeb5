@@ -17,44 +17,22 @@ const Header = (props) => {
   };
 
   return (
-    // <nav className="navbar navbar-default">
-    //     <div className="container-fluid">
-    //         <div className="Header">
-    //             <div className="navbar-header">
-
-    //                 <ul className="nav navbar-nav">
-    //                     <li style={{display:(isAuth ? "block" : "none")}}><Link to="/posts">Posts</Link></li>
-    //                 </ul>
-
-    //                 <ul className="nav navbar-nav">
-    //                     <li style={{display:(isAuth ? "none" : "block")}}><Link to="/register">Inscription</Link></li>
-    //                     <li style={{display:(isAuth ? "none" : "block")}}><Link to="/login">Authentification</Link></li>
-    //                 </ul>
-    //             </div>
-
-    //             <button onClick={e=>btnDeconnexion(e)} style={{display:(isAuth ? "block" : "none")}} className="btn btn-danger">Déconnexion</button>
-
-    //         </div>
-    //     </div>
-    // </nav>
-    <ul class="nav nav-tabs">
-      <li class="nav-item" style={{display:(isAuth ? "block" : "none")}}>
-        <Link class="nav-link active" aria-current="page" to="/register">
-          Inscription
-        </Link>
-      </li>
-      <li class="nav-item" style={{display:(isAuth ? "block" : "none")}}>
-        <Link class="nav-link" to="/login">
+    <ul className="nav nav-tabs">
+      <li className="nav-item" style={{display:(isAuth ? "block" : "block")}}>
+        <Link className="nav-link" to="/login">
           Authentification
         </Link>
       </li>
-      <li class="nav-item" style={{display:(isAuth ? "none" : "block")}}>
-        <a class="nav-link" href="#">
-          Link
-        </a>
+      <li className="nav-item" style={{display:(isAuth ? "block" : "block")}}>
+        <Link className="nav-link" to="/accueil">
+          Accueil
+        </Link>
       </li>
-      <li class="nav-item">
-        <button onClick={e=>btnDeconnexion(e)} style={{display:(isAuth ? "block" : "none")}} className="btn btn-danger">Déconnexion</button>
+      <li className="nav-item" style={{display:(isAuth ? "block" : "block")}}>
+      <Link style={{display:(isAuth ? "block" : "none")}} className="nav-link" to="/creerprojet">Créer un Projet</Link>
+      </li>
+      <li className="nav-item">
+        <button onClick={e=>btnDeconnexion(e)} style={{display:(isAuth ? "block" : "block")}} className="nav-link">Déconnexion</button>
       </li>
     </ul>
   );
