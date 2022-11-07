@@ -5,7 +5,7 @@ import { authContexte } from "../../Contexte/authContexte";
 const Login = () =>{
     const ctx = useContext(authContexte);
     const HandleGoogleSignIn = async () => {
-         ctx.login();
+        ctx.login();
     };
 
     return (

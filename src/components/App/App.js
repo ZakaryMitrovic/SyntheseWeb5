@@ -3,6 +3,7 @@ import Layout from "../Layout/Layout";
 import Login from "../Login/Login";
 import TableauBord from "../TableauBord/TableauBord";
 import CreerProjets from "../Projets/CreerProjets";
+import Membres from "../Membres/Membres";
 import Header from "../Header/Header";
 import { authContexte } from "../../Contexte/authContexte";
 import { useContext } from "react";
@@ -11,6 +12,7 @@ import { useContext } from "react";
 const App = () =>{
   const ctx = useContext(authContexte);
   console.log(ctx.user);
+
   const routes = ctx.user ? [
 	{
 	  path: "/",
@@ -24,10 +26,14 @@ const App = () =>{
 		  path: "accueil",
 		  element: <TableauBord />,
 		},
-        {
-            path: 'creerprojet',
-            element: <CreerProjets/>
-        }
+    {
+      path: 'creerprojet',
+      element: <CreerProjets/>
+    },
+    {
+      path: 'membres',
+      element: <Membres/>
+    }
 	  ]
 	},
 	{

@@ -12,7 +12,7 @@ const CreerProjets = () =>{
 
     // Pour reçevoir l'information des membres
     useEffect(() => {
-        const unsub = onSnapshot(collection(db, 'contact'), (snapshot) => {
+        const unsub = onSnapshot(collection(db, 'membres'), (snapshot) => {
             setContact(snapshot.docs.map(doc => {
                 return {
                     ...doc.data(),
@@ -65,45 +65,22 @@ const CreerProjets = () =>{
     
                     {/* Pour les membres */}
                     <div className="checkboxMembres">
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
-                            <label class="form-check-label" for="flexSwitchCheckDefault">membre</label>
-                        </div>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
-                            <label class="form-check-label" for="flexSwitchCheckDefault">membre</label>
-                        </div>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
-                            <label class="form-check-label" for="flexSwitchCheckDefault">membre</label>
-                        </div>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
-                            <label class="form-check-label" for="flexSwitchCheckDefault">membre</label>
-                        </div>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
-                            <label class="form-check-label" for="flexSwitchCheckDefault">membre</label>
-                        </div>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
-                            <label class="form-check-label" for="flexSwitchCheckDefault">membre</label>
-                        </div>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
-                            <label class="form-check-label" for="flexSwitchCheckDefault">membre</label>
-                        </div>
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
-                            <label class="form-check-label" for="flexSwitchCheckDefault">membre</label>
-                        </div>
+                        {contact.map((membre)=>(
+                            <div className="form-check form-switch" key={membre.nom + membre.email}>
+                                <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
+                                <label className="form-check-label" htmlFor="flexSwitchCheckDefault">{membre.nom}</label>
+                            </div>  
+                        ))}
                     </div>
 
                     {/* Pour les clients */}
                     <div className="selectClient">
+                        <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Ajouter un Client</label>
                         <select className="form-select form-select-sm" aria-label=".form-select-sm example">
-                            <option defaultValue>Ajouter un client?</option>
+                            <option defaultValue>Pas de Client</option>
                             <option value="1">Client1</option>
+                            <option value="1">Client2</option>
+                            <option value="1">Client3</option>
                         </select>
                     </div>
                 </div>

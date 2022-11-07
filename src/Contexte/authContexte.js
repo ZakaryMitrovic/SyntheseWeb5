@@ -5,7 +5,9 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-import { auth } from "../config/firebase";
+import { auth, db } from "../config/firebase";
+import {collection, onSnapshot, addDoc, setDoc, doc, arrayUnion} from 'firebase/firestore';
+
 
 const authContexte = React.createContext({
   login: () => {},
@@ -17,6 +19,8 @@ const { Provider } = authContexte;
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState();
+  const [membre, setMembre] = useState([{nom: ""}]);
+
   useEffect(() => {
     const unsub = auth.onAuthStateChanged((user) => {
       console.log(user);
@@ -24,10 +28,17 @@ const AuthProvider = ({ children }) => {
     });
     return unsub;
   }, []);
+
   const login = async () => {
     const provider = new GoogleAuthProvider();
     const creds = await signInWithPopup(auth, provider);
     setUser(creds.user);
+
+    const docRef = doc(db, 'membres', creds.user.uid);
+    await setDoc(docRef, {
+        nom: creds.user.displayName,
+        email: creds.user.email
+    });
   };
   const logout = async () => {
     const creds = await signOut(auth);

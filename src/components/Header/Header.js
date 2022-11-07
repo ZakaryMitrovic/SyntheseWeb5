@@ -31,9 +31,13 @@ const Header = (props) => {
       <li className="nav-item" style={{display:(isAuth ? "block" : "block")}}>
       <Link style={{display:(isAuth ? "block" : "none")}} className="nav-link" to="/creerprojet">Créer un Projet</Link>
       </li>
+      <li className="nav-item" style={{display:(isAuth ? "block" : "block")}}>
+      <Link style={{display:(isAuth ? "block" : "none")}} className="nav-link" to="/membres">Membres</Link>
+      </li>
       <li className="nav-item">
         <button onClick={e=>btnDeconnexion(e)} style={{display:(isAuth ? "block" : "none")}} className="nav-link">Déconnexion</button>
       </li>
+      {(isAuth ? <li className="nav-item" style={{display:(isAuth ? "block" : "none")}}><p className="nav-link">{ctx.user.displayName}</p></li> : null)}
     </ul>
   );
 };
