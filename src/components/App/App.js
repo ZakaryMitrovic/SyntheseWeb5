@@ -1,8 +1,8 @@
 import { RouterProvider, createBrowserRouter, Navigate } from "react-router-dom";
-import { Layout } from "../Layout/Layout";
-import { Login } from "../Login/Login";
-import { Register } from "../Register/Register";
-import { TableauBord } from "../TableauBord/TableauBord";
+import Layout from "../Layout/Layout";
+import Login from "../Login/Login";
+import TableauBord from "../TableauBord/TableauBord";
+import Header from "../Header/Header";
 import { authContexte } from "../../Contexte/authContexte";
 import { useContext } from "react";
 
@@ -41,11 +41,7 @@ const App = () =>{
             {
               path: "login",
               element: <Login />,
-            },
-            {
-              path: "register",
-              element: <Register />,
-            },
+            }
           ],
         },
         {
