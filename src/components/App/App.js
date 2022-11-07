@@ -37,16 +37,16 @@ const App = () =>{
       element: <Membres/>
     },
     {
-            path: 'creerprojet',
-            element: <CreerProjets/>
+      path: 'creerprojet',
+      element: <CreerProjets/>
     },
     {
-            path: 'creerClient',
-            element: <CreerClient/>
+      path: 'creerClient',
+      element: <CreerClient/>
     },
     {
-            path: 'detailsClient',
-            element: <DetailsClient/>
+      path: 'detailsClient',
+      element: <DetailsClient/>
     }
 	  ]
 	},
