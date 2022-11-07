@@ -23,6 +23,7 @@ const Header = (props) => {
           Authentification
         </Link>
       </li>
+      
       <li className="nav-item" style={{display:(isAuth ? "block" : "none")}}>
         <Link className="nav-link" to="/accueil">
           Accueil
@@ -30,6 +31,16 @@ const Header = (props) => {
       </li>
       <li className="nav-item" style={{display:(isAuth ? "block" : "block")}}>
       <Link style={{display:(isAuth ? "block" : "none")}} className="nav-link" to="/creerprojet">Créer un Projet</Link>
+      </li>
+      <li className="nav-item" style={{display:(isAuth ? "block" : "block")}}>
+        <Link className="nav-link" to="/CreerClient">
+          Ajouter un client
+        </Link>
+      </li>
+      <li className="nav-item" style={{display:(isAuth ? "block" : "block")}}>
+        <Link className="nav-link" to="/DetailsClient">
+          Voir les Clients
+        </Link>
       </li>
       <li className="nav-item">
         <button onClick={e=>btnDeconnexion(e)} style={{display:(isAuth ? "block" : "none")}} className="nav-link">Déconnexion</button>
