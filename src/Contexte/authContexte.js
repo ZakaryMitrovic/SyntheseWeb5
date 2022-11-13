@@ -34,12 +34,13 @@ const AuthProvider = ({ children }) => {
     setUser(creds.user);
 
     const docRef = doc(db, 'membres', creds.user.uid);
-    await getDoc(docRef, {
-        nom: creds.user.displayName,
-        email: creds.user.email,
-        projets: [],
-        contacts: []
-    });
+    await getDoc(docRef);
+    // await setDoc(docRef, {
+    //     nom: creds.user.displayName,
+    //     email: creds.user.email,
+    //     projets: [],
+    //     contacts: []
+    // });
   };
   
   const logout = async () => {
