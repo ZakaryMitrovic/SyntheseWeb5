@@ -1,9 +1,6 @@
 @import '/src/components/Membres/Membres.scss';
 
 form{
-    & .formgauche{
-        
-    }
     & .formDroit{
         display: grid;
         grid-template-columns: repeat(2fr);

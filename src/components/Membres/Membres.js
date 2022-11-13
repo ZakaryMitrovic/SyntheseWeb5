@@ -23,7 +23,7 @@ const Membres = () =>{
  return(
     <ul className="list-group">
         {membres.map((membre)=>(
-            <li className="list-group-item d-flex justify-content-between align-items-center">
+            <li className="list-group-item d-flex justify-content-between align-items-center" key={membre.nom + membre.email}>
                 {membre.nom} <p>{membre.email}</p>
                 <span className="badges">14</span>
             </li>

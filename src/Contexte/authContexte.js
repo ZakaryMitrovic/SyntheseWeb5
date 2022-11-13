@@ -3,10 +3,10 @@ import React, { useState, useEffect } from "react";
 import {
   GoogleAuthProvider,
   signInWithPopup,
-  signOut,
+  signOut,getAdditionalUserInfo
 } from "firebase/auth";
 import { auth, db } from "../config/firebase";
-import { collection, onSnapshot, addDoc, setDoc, doc, arrayUnion, getDoc } from 'firebase/firestore';
+import { collection, onSnapshot, addDoc, setDoc, doc, arrayUnion, getDoc, } from 'firebase/firestore';
 
 
 const authContexte = React.createContext({
@@ -38,18 +38,34 @@ const AuthProvider = ({ children }) => {
     //si oui, getdoc
     //sinon, setdoc
 
-    if (!docRef.exists) {
-      console.log('No such document exists!');
+    // if (docRef.exists) {
+    //   console.log('it exists!');
+    //   await getDoc(docRef);
+    // } else {
+    //   console.log('No such document exists!');
+    //   await setDoc(docRef, {
+    //     nom: creds.user.displayName,
+    //     email: creds.user.email,
+    //     projets: [],
+    //     contacts: []
+    //   });
+    // }
+
+    const { isNewUser } = getAdditionalUserInfo(creds) // <-- or result of signInWithRedirect();
+
+    if (isNewUser) {
+      // user has signed in first time
       await setDoc(docRef, {
-        nom: creds.user.displayName,
-        email: creds.user.email,
-        projets: [],
-        contacts: []
-      });
-    } else{
-      console.log('it exists!');
+            nom: creds.user.displayName,
+            email: creds.user.email,
+            projets: [],
+            contacts: []
+          });
+    } else {
+      // Existing user, document created already. 
       await getDoc(docRef);
     }
+
   };
 
   const logout = async () => {
