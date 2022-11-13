@@ -6,12 +6,12 @@ import {
   signOut,
 } from "firebase/auth";
 import { auth, db } from "../config/firebase";
-import {collection, onSnapshot, addDoc, setDoc, doc, arrayUnion, getDoc} from 'firebase/firestore';
+import { collection, onSnapshot, addDoc, setDoc, doc, arrayUnion, getDoc } from 'firebase/firestore';
 
 
 const authContexte = React.createContext({
-  login: () => {},
-  logout: () => {},
+  login: () => { },
+  logout: () => { },
   user: null,
 });
 
@@ -34,15 +34,24 @@ const AuthProvider = ({ children }) => {
     setUser(creds.user);
 
     const docRef = doc(db, 'membres', creds.user.uid);
-    await getDoc(docRef);
-    // await setDoc(docRef, {
-    //     nom: creds.user.displayName,
-    //     email: creds.user.email,
-    //     projets: [],
-    //     contacts: []
-    // });
+    //faire une condition si le id existe dans la base de donner
+    //si oui, getdoc
+    //sinon, setdoc
+    //FAIRE CONDITION
+    if (docRef === undefined) {
+      console.log('No such document exists!');
+      await setDoc(docRef, {
+        nom: creds.user.displayName,
+        email: creds.user.email,
+        projets: [],
+        contacts: []
+      });
+    } else {
+      console.log('it exists!');
+      await getDoc(docRef);
+    }
   };
-  
+
   const logout = async () => {
     const creds = await signOut(auth);
     setUser(creds);
