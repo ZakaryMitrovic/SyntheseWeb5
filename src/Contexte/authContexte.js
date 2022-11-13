@@ -37,8 +37,8 @@ const AuthProvider = ({ children }) => {
     //faire une condition si le id existe dans la base de donner
     //si oui, getdoc
     //sinon, setdoc
-    //FAIRE CONDITION
-    if (docRef === undefined) {
+
+    if (!docRef.exists) {
       console.log('No such document exists!');
       await setDoc(docRef, {
         nom: creds.user.displayName,
@@ -46,7 +46,7 @@ const AuthProvider = ({ children }) => {
         projets: [],
         contacts: []
       });
-    } else {
+    } else{
       console.log('it exists!');
       await getDoc(docRef);
     }
