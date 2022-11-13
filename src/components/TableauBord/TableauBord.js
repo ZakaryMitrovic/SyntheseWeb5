@@ -6,10 +6,10 @@ import { Link } from "react-router-dom";
 
 const TableauBord = () =>{
     const ctx = useContext(authContexte);
-    const [projet, setProjet] = useState([]);
+    const [projets, setProjets] = useState([]);
     useEffect(() => {
         const unsub = onSnapshot(collection(db, 'projets'), (snapshot) => {
-            setProjet(snapshot.docs.map(doc => {
+            setProjets(snapshot.docs.map(doc => {
                 return {
                     ...doc.data(),
                     id: doc.id
@@ -21,7 +21,7 @@ const TableauBord = () =>{
 
     return(
         <section style={{marginTop:50+'px'}}>
-            {projet.map((projet)=>(
+            {projets.map((projet)=>(
                 <div className="card" style={{width:18+'em'}} key={projet.nom + projet.url}>
                     <img src={"logo512.png" }className="card-img-top" alt="ImgProjet"/>
                     <div className="card-body">

@@ -6,7 +6,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { auth, db } from "../config/firebase";
-import {collection, onSnapshot, addDoc, setDoc, doc, arrayUnion} from 'firebase/firestore';
+import {collection, onSnapshot, addDoc, setDoc, doc, arrayUnion, getDoc} from 'firebase/firestore';
 
 
 const authContexte = React.createContext({
@@ -19,7 +19,6 @@ const { Provider } = authContexte;
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState();
-  const [membre, setMembre] = useState([{nom: ""}]);
 
   useEffect(() => {
     const unsub = auth.onAuthStateChanged((user) => {
@@ -35,11 +34,14 @@ const AuthProvider = ({ children }) => {
     setUser(creds.user);
 
     const docRef = doc(db, 'membres', creds.user.uid);
-    await setDoc(docRef, {
+    await getDoc(docRef, {
         nom: creds.user.displayName,
-        email: creds.user.email
+        email: creds.user.email,
+        projets: [],
+        contacts: []
     });
   };
+  
   const logout = async () => {
     const creds = await signOut(auth);
     setUser(creds);
