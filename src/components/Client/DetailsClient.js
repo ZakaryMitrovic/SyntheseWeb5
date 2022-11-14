@@ -34,6 +34,7 @@ console.log(ClientDetails);
 
         <h2>{ClientDetails.nom}</h2>
         <p> {ClientDetails.email} </p>
+        <button>Supprimer</button>
 
         </div>
         
