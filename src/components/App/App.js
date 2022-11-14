@@ -13,7 +13,6 @@ import { useContext } from "react";
 
 const App = () =>{
   const ctx = useContext(authContexte);
-  console.log(ctx.user);
 
   const routes = ctx.user ? [
 	{

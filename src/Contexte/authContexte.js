@@ -34,22 +34,9 @@ const AuthProvider = ({ children }) => {
     setUser(creds.user);
 
     const docRef = doc(db, 'membres', creds.user.uid);
-    //faire une condition si le id existe dans la base de donner
+    //faire une condition si l'utilisateur existe dans la base de donner
     //si oui, getdoc
     //sinon, setdoc
-
-    // if (docRef.exists) {
-    //   console.log('it exists!');
-    //   await getDoc(docRef);
-    // } else {
-    //   console.log('No such document exists!');
-    //   await setDoc(docRef, {
-    //     nom: creds.user.displayName,
-    //     email: creds.user.email,
-    //     projets: [],
-    //     contacts: []
-    //   });
-    // }
 
     const { isNewUser } = getAdditionalUserInfo(creds) // <-- or result of signInWithRedirect();
 
@@ -65,7 +52,7 @@ const AuthProvider = ({ children }) => {
       // Existing user, document created already. 
       await getDoc(docRef);
     }
-
+    
   };
 
   const logout = async () => {
