@@ -1,10 +1,10 @@
 .list-group{
     margin-top:25px;
-
-    & .badges{
-        background-color: lightblue;
-        border-radius: 10px;
-        width: 30px;
-        text-align: center;
-    }
+    
+        & .badges{
+            background-color: lightblue;
+            border-radius: 10px;
+            width: 30px;
+            text-align: center;
+        }
 }

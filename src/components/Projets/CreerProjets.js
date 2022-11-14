@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import { onSnapshot, collection, addDoc } from 'firebase/firestore';
+import { onSnapshot, collection, doc, addDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { authContexte } from "../../Contexte/authContexte";
 import Spinner from "../Spinner/Spinner";
@@ -9,16 +9,20 @@ const CreerProjets = () =>{
     const [contact, setContact] = useState([]);
     const [client, setClient] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [newProjet, setNewProjet] = useState({
+        description: '',
+        nom: '',
+        membres: {},
+    });
 
     // Pour reçevoir l'information des membres
     useEffect(() => {
-        const unsub = onSnapshot(collection(db, 'membres'), (snapshot) => {
-            setContact(snapshot.docs.map(doc => {
-                return {
-                    ...doc.data(),
-                    id: doc.id
-                };
-            }));
+        const unsub = onSnapshot(doc(db, 'membres', ctx.user.uid), (snapshot) => {
+            // console.log(snapshot.data());
+            setContact({
+                ...snapshot.data(),
+                id: snapshot.id
+            })
             setIsLoading(false);
         });
         return unsub;
@@ -43,6 +47,12 @@ const CreerProjets = () =>{
         console.log("it works");
     };
     
+    const CheckMembres = async(nomMembre) => {
+        
+        console.log(contact);
+        
+    };
+
     return(
         <section>
             {isLoading ? <Spinner/> : (
@@ -65,12 +75,13 @@ const CreerProjets = () =>{
     
                     {/* Pour les membres */}
                     <div className="checkboxMembres">
-                        {contact.map((membre)=>(
-                            <div className="form-check form-switch" key={membre.nom + membre.email}>
-                                <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault"/>
-                                <label className="form-check-label" htmlFor="flexSwitchCheckDefault">{membre.nom}</label>
-                            </div>  
-                        ))}
+                        <p>Contacts:</p>
+                       {contact.contacts.map((membre)=>(
+                        <div className="form-check form-switch" key={membre.nom + membre.email}>
+                            <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" onChange={(e)=>CheckMembres(e.target.value)} value={membre.nom} checked={newProjet.membres[membre.id] ? true : false}/>
+                            <label className="form-check-label" htmlFor="flexSwitchCheckDefault">{membre.nom}</label>
+                        </div>  
+                       ))}
                     </div>
 
                     {/* Pour les clients */}
