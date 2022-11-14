@@ -1,48 +1,42 @@
-import { useState, useContext, useEffect } from "react";
-import { onSnapshot, collection, addDoc } from 'firebase/firestore';
-import { db } from '../../config/firebase';
-import { authContexte } from "../../Contexte/authContexte";
-import Spinner from "../Spinner/Spinner";
+
+import { useEffect, useState } from 'react';
+import {useParams} from 'react-router-dom';
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../config/firebase";
 
 const DetailsClient = () =>{
-    const [isLoading, setIsLoading] = useState(true);
-    const [client, setClient] = useState([]);
-    
-    // Pour reçevoir l'information des clients
+
+    const [ClientDetails, setClientDetails] = useState(null);
+    const params = useParams();
+
+
     useEffect(() => {
-        const unsub = onSnapshot(collection(db, 'clients'), (snapshot) => {
-            setClient(snapshot.docs.map(doc => {
-                return {
-                    ...doc.data(),
-                    id: doc.id
-                };
-            }));
-            setIsLoading(false);
-        });
-        return unsub;
-    }, []);
 
-    console.log(client.nom);
+        const getClient = async() => {
+            const docRef = doc(db, 'clients', params.clientId);
 
+            const monDoc = await getDoc(docRef);
 
-    const SubmitForm = async (e) => {
-        e.preventDefault();
-        console.log("it works");
-    };
-    
+            const monClient = monDoc.data();
+            
+            setClientDetails({
+                ...monClient,
+                id: monDoc.id
+            });
+        };
+        getClient();
+    }, [params.clientId]);
+
+console.log(ClientDetails);
+   
     return(
-        <section>
-        
-        <div className="card"  style={{width:18+'em'}}>
-        <img src="..." className="card-img-top" alt="..."/>
-        <div className="card-body">
-        <h5 className="card-title">Card title</h5>
-        <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" className="btn btn-primary">Go somewhere</a>
-        </div>
-        </div>
+        <div>
 
-        </section>
+        <h2>{ClientDetails.nom}</h2>
+        <p> {ClientDetails.email} </p>
+
+        </div>
+        
     );
 };
 export default DetailsClient;

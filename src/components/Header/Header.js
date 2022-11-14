@@ -41,7 +41,7 @@ const Header = (props) => {
         </Link>
       </li>
       <li className="nav-item" style={{display:(isAuth ? "block" : "none")}}>
-        <Link className="nav-link" to="/DetailsClient">
+        <Link className="nav-link" to="/Clients">
           Voir les Clients
         </Link>
       </li>
