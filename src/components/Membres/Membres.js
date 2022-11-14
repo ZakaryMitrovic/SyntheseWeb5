@@ -12,8 +12,7 @@ import { db } from "../../config/firebase";
 import { authContexte } from "../../Contexte/authContexte";
 import { Link, Outlet } from "react-router-dom";
 import Spinner from "../Spinner/Spinner";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
 
 const Membres = () => {
   const ctx = useContext(authContexte);
@@ -37,8 +36,6 @@ const Membres = () => {
     };
     getMembre();
   }, [membres]);
-
-  const notify = () => toast("Vous avez déjà rajouter ce contact");
 
   const AddContact = async (e, membre) => {
     e.preventDefault();

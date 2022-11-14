@@ -46,7 +46,8 @@ const AuthProvider = ({ children }) => {
             nom: creds.user.displayName,
             email: creds.user.email,
             projets: [],
-            contacts: []
+            contacts: [],
+            clients: []
           });
     } else {
       // Existing user, document created already. 

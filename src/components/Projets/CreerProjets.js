@@ -12,8 +12,9 @@ const CreerProjets = () =>{
     const [newProjet, setNewProjet] = useState({
         description: '',
         nom: '',
-        membres: {},
+        membres: [],
     });
+    const [selected, setSelected] = useState([]);
 
     // Pour reçevoir l'information des membres
     useEffect(() => {
@@ -44,15 +45,28 @@ const CreerProjets = () =>{
 
     const SubmitForm = async (e) => {
         e.preventDefault();
+        const membreRef = doc(db, "membres", ctx.user.uid);
+        
         console.log("it works");
     };
     
-    const CheckMembres = async(nomMembre) => {
-        
-        console.log(contact);
+    const CheckMembres = async(e, membreId, nomMembre, emailMembre) => {
+        const { checked, value } = e.currentTarget;
+        setSelected(
+          prev => checked
+            ? [...prev, value]
+            : prev.filter(val => val !== value)
+        );
+
+        //FIX THIS
+        const membrePourAjout = {[membreId]: membreId, nom: nomMembre, email:emailMembre};
+        newProjet.membres.map((membre)=>{
+            membrePourAjout.push({[membreId]: membre.id, nom: membre.nom, email: membre.email})
+        })
+        console.log(membrePourAjout);
         
     };
-
+    console.log(newProjet);
     return(
         <section>
             {isLoading ? <Spinner/> : (
@@ -78,7 +92,7 @@ const CreerProjets = () =>{
                         <p>Contacts:</p>
                        {contact.contacts.map((membre)=>(
                         <div className="form-check form-switch" key={membre.nom + membre.email}>
-                            <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" onChange={(e)=>CheckMembres(e.target.value)} value={membre.nom} checked={newProjet.membres[membre.id] ? true : false}/>
+                            <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" onChange={(e)=>CheckMembres(e, e.target.value, membre.nom, membre.email)} value={membre.id} checked={selected.some(val => val === membre.id)}/>
                             <label className="form-check-label" htmlFor="flexSwitchCheckDefault">{membre.nom}</label>
                         </div>  
                        ))}
