@@ -1,32 +1,45 @@
-import { useState, useContext, useEffect } from "react";
-import { onSnapshot, collection, addDoc } from 'firebase/firestore';
+import { useState,  useEffect, useContext } from "react";
+import { onSnapshot, collection, doc, deleteDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import {Outlet } from 'react-router-dom';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
+import { authContexte } from "../../Contexte/authContexte";
 
 const Clients = () =>{
-    const [isLoading, setIsLoading] = useState(true);
     const [client, setClient] = useState([]);
+    const navigate = useNavigate();
+    const ctx = useContext(authContexte);
     
     // Pour reçevoir l'information des clients
+  
     useEffect(() => {
-        const unsub = onSnapshot(collection(db, 'clients'), (snapshot) => {
-            setClient(snapshot.docs.map(doc => {
-                return {
-                    ...doc.data(),
-                    id: doc.id
-                };
-            }));
-            setIsLoading(false);
+
+        const unsub = onSnapshot(doc(db, 'membres', ctx.user.uid), (snapshot) => {
+
+            setClient({
+                ...snapshot.data(),
+                id: snapshot.id
+            })
         });
         return unsub;
-    }, []);
+        
+    }, [client.length]);
+    
+    
+      
+    
+
+  const deleteHandler = async (id) => {
+    await deleteDoc(doc(db, "clients" , id))
+    navigate('/clients');
+  };
 
     
     return(
-        <>
+        client.length == 0 ? (null) : (
+        <div>
         <section>
-        {client.map(({nom,email, id}) => (
+        {client.clients.map(({nom,email, id}) => (
 
 
             <div key={id} className="card"  style={{width:18+'em'}}>
@@ -36,15 +49,16 @@ const Clients = () =>{
             <p className="card-text"> {email} </p>
             
             <Link to={`/clients/${id}`}><button className="btn btn-primary" >Modifier client</button></Link>
+            <button className="btn btn-primary" onClick={()=>deleteHandler(id)}  >Supprimer</button>
             </div>
             </div>
                    
         ))}
        
-
         </section>
         <div><Outlet/></div>
-        </>  
+        </div>  
+        )
     );
 };
 export default Clients;
