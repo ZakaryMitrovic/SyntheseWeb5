@@ -9,6 +9,7 @@ import DetailsClient from "../Client/DetailsClient";
 import Header from "../Header/Header";
 import { authContexte } from "../../Contexte/authContexte";
 import { useContext } from "react";
+import Clients from "../Client/Client";
 
 
 const App = () =>{
@@ -44,8 +45,14 @@ const App = () =>{
       element: <CreerClient/>
     },
     {
-      path: 'detailsClient',
-      element: <DetailsClient/>
+      path: 'clients',
+      element: <Clients/>,
+      children: [
+        {
+          path: ':clientId',
+          element: <DetailsClient/>,
+        },
+      ],
     }
 	  ]
 	},

@@ -1,48 +1,87 @@
-import { useState, useContext, useEffect } from "react";
-import { onSnapshot, collection, addDoc } from 'firebase/firestore';
-import { db } from '../../config/firebase';
-import { authContexte } from "../../Contexte/authContexte";
-import Spinner from "../Spinner/Spinner";
+
+import { useEffect, useState } from 'react';
+import {useParams, useNavigate} from 'react-router-dom';
+import {doc, getDoc, setDoc} from "firebase/firestore";
+import { db } from "../../config/firebase";
 
 const DetailsClient = () =>{
-    const [isLoading, setIsLoading] = useState(true);
-    const [client, setClient] = useState([]);
-    
-    // Pour reçevoir l'information des clients
+
+    const [ClientDetails, setClientDetails] = useState(null);
+    const params = useParams();
+    const navigate = useNavigate();
+
+
     useEffect(() => {
-        const unsub = onSnapshot(collection(db, 'clients'), (snapshot) => {
-            setClient(snapshot.docs.map(doc => {
-                return {
-                    ...doc.data(),
-                    id: doc.id
-                };
-            }));
-            setIsLoading(false);
-        });
-        return unsub;
-    }, []);
 
-    console.log(client.nom);
+        const getClient = async() => {
+            const docRef = doc(db, 'clients', params.clientId);
 
+            const monDoc = await getDoc(docRef);
 
-    const SubmitForm = async (e) => {
+            const monClient = monDoc.data();
+            
+            setClientDetails({
+                ...monClient,
+                id: monDoc.id
+            });
+        };
+        getClient();
+    }, [params.clientId]);
+
+    
+    const submitHandler = async(e) => {
         e.preventDefault();
-        console.log("it works");
+
+        // Modifier le client 
+        const docRef = doc(db, 'clients', params.clientId);
+        
+        await setDoc(docRef, {
+       
+                nom: ClientDetails.nom,
+                email: ClientDetails.email
+           
+        }, {merge: true});
+
+        navigate('/clients');
+        
+    };
+
+    const updateClients = (texte, prop) => {
+        setClientDetails(current => {
+            return {
+                ...current,
+                [prop]: texte
+            };
+        });
     };
     
-    return(
-        <section>
-        
-        <div className="card"  style={{width:18+'em'}}>
-        <img src="..." className="card-img-top" alt="..."/>
-        <div className="card-body">
-        <h5 className="card-title">Card title</h5>
-        <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="#" className="btn btn-primary">Go somewhere</a>
-        </div>
-        </div>
 
+    return(
+        ClientDetails == null ? (null) : (
+          
+            <section>
+            
+            <form style={{marginTop:50+'px'}} noValidate onSubmit={submitHandler} >
+                <div>
+                    {/* Nom du client */}
+                    <div className="input-group mb-3">
+                        <span className="input-group-text" id="inputGroup-sizing-default">Nom du client</span>
+                        <input onChange={(e) => updateClients(e.target.value, 'nom')} value={ClientDetails.nom} type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"/>
+                    </div>
+                    {/* Email du client */}
+                    <div className="input-group mb-3">
+                        <span className="input-group-text" id="inputGroup-sizing-default">Email du client</span>
+                        <input  onChange={(e) => updateClients(e.target.value, 'email')} value={ClientDetails.email}  type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"/>
+                    </div>
+        
+                
+                </div>
+                <button className="btn btn-primary btnProjet" type="submit">Confirmer</button>
+            </form>
         </section>
+        )
+      
+        
     );
 };
 export default DetailsClient;
