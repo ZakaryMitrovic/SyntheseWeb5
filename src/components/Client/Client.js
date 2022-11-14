@@ -1,5 +1,5 @@
 import { useState,  useEffect, useContext } from "react";
-import { onSnapshot, collection, doc, deleteDoc } from 'firebase/firestore';
+import { onSnapshot, collection, doc, deleteDoc, arrayUnion, setDoc, arrayRemove } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import {Outlet } from 'react-router-dom';
 import {Link, useNavigate} from 'react-router-dom';
@@ -22,34 +22,41 @@ const Clients = () =>{
             })
         });
         return unsub;
-        
     }, [client.length]);
+   
     
     
       
     
 
-  const deleteHandler = async (id) => {
-    await deleteDoc(doc(db, "clients" , id))
+  const deleteHandler = async (index) => {
+    const clientRef = doc(db, "membres", ctx.user.uid);
+    
+    await setDoc(clientRef, {clients: arrayRemove({
+        nom: client.clients[index].nom,
+        email: client.clients[index].email,
+    })},{ merge: true });
     navigate('/clients');
+    
   };
 
+  
     
     return(
         client.length == 0 ? (null) : (
         <div>
         <section>
-        {client.clients.map(({nom,email, id}) => (
+        {client.clients.map(({nom,email} , index) => (
 
 
-            <div key={id} className="card"  style={{width:18+'em'}}>
+            <div  className="card"  style={{width:18+'em'}}>
             <img src={"logo192.png" } className="card-img-top" alt="..."/>
             <div className="card-body">
             <h5 className="card-title"> {nom} </h5>
             <p className="card-text"> {email} </p>
             
-            <Link to={`/clients/${id}`}><button className="btn btn-primary" >Modifier client</button></Link>
-            <button className="btn btn-primary" onClick={()=>deleteHandler(id)}  >Supprimer</button>
+            <Link to={`/clients/${index}`}><button className="btn btn-primary" >Modifier client</button></Link>
+            <button className="btn btn-primary" onClick={()=>deleteHandler(index)}  >Supprimer</button>
             </div>
             </div>
                    

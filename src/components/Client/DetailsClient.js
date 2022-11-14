@@ -1,7 +1,7 @@
 
 import { useEffect, useState } from 'react';
 import {useParams, useNavigate} from 'react-router-dom';
-import {doc, getDoc, setDoc} from "firebase/firestore";
+import {arrayUnion, doc, getDoc, setDoc} from "firebase/firestore";
 import { db } from "../../config/firebase";
 
 const DetailsClient = () =>{
@@ -14,7 +14,7 @@ const DetailsClient = () =>{
     useEffect(() => {
 
         const getClient = async() => {
-            const docRef = doc(db, 'clients', params.clientId);
+            const docRef = doc(db, 'membres', params.clientId);
 
             const monDoc = await getDoc(docRef);
 
@@ -33,12 +33,15 @@ const DetailsClient = () =>{
         e.preventDefault();
 
         // Modifier le client 
-        const docRef = doc(db, 'clients', params.clientId);
+        const docRef = doc(db, 'membres', params.clientId);
         
-        await setDoc(docRef, {
-       
-                nom: ClientDetails.nom,
-                email: ClientDetails.email
+        await setDoc(docRef, 
+        {
+            
+            clients: arrayUnion({
+                nom: ClientDetails.clients[params.clientId].nom,
+                email: ClientDetails.clients[params.clientId].email
+              }),
            
         }, {merge: true});
 
@@ -54,7 +57,7 @@ const DetailsClient = () =>{
             };
         });
     };
-    
+ 
 
     return(
         ClientDetails == null ? (null) : (
