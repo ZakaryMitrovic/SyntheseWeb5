@@ -1,10 +1,12 @@
 import { useState, useContext, useEffect } from "react";
-import { onSnapshot, collection, doc, addDoc } from 'firebase/firestore';
+import { onSnapshot, collection, doc, addDoc, setDoc, arrayUnion } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { authContexte } from "../../Contexte/authContexte";
 import Spinner from "../Spinner/Spinner";
+import { useNavigate } from 'react-router-dom';
 
 const CreerProjets = () =>{
+    const navigate = useNavigate();
     const ctx = useContext(authContexte);
     const [contact, setContact] = useState([]);
     const [client, setClient] = useState([]);
@@ -12,7 +14,9 @@ const CreerProjets = () =>{
     const [newProjet, setNewProjet] = useState({
         description: '',
         nom: '',
+        color: '#rrggbb',
         membres: [],
+        client: {}
     });
     const [selected, setSelected] = useState([]);
 
@@ -42,12 +46,32 @@ const CreerProjets = () =>{
         return unsub;
     }, []);
 
+    const updateProjet = (texte, prop) => {
+        setNewProjet(current => {
+            return {
+                ...current,
+                [prop]: texte
+            };
+        });
+        console.log(newProjet);
+    };
 
     const SubmitForm = async (e) => {
         e.preventDefault();
         const membreRef = doc(db, "membres", ctx.user.uid);
-        
+        await setDoc(
+            membreRef,
+            {
+              projets: arrayUnion({
+                nom: newProjet.nom,
+                description: newProjet.description,
+                color: newProjet.color
+              }),
+            },
+            { merge: true }
+        );
         console.log("it works");
+        navigate('/accueil');
     };
     
     const CheckMembres = async(e, membreId, nomMembre, emailMembre) => {
@@ -66,29 +90,38 @@ const CreerProjets = () =>{
         console.log(membrePourAjout);
         
     };
-    console.log(newProjet);
+    
+
+
     return(
         <section>
             {isLoading ? <Spinner/> : (
             <form style={{marginTop:50+'px'}} noValidate onSubmit={(e)=>SubmitForm(e)}>
                 <div className="">
+                    {/* Couleur du Projet */}
+                    <div className="input-group mb-3">
+                        <span className="input-group-text" id="inputGroup-sizing-default">Couleur du projet</span>
+                        <input type="color" onChange={(e) => updateProjet(e.target.value, 'color')} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={newProjet.color}/>
+                    </div>
+
                     {/* Titre du Projet */}
                     <div className="input-group mb-3">
                         <span className="input-group-text" id="inputGroup-sizing-default">Nom du Projet</span>
-                        <input type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"/>
+                        <input type="text" onChange={(e) => updateProjet(e.target.value, 'nom')} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={newProjet.nom}/>
                     </div>
         
                     {/* Description du Projet */}
                     <div className="mb-3">
                         <label htmlFor="exampleFormControlTextarea1" className="form-label">Description du Projet</label>
-                        <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <textarea onChange={(e) => updateProjet(e.target.value, 'description')} className="form-control" id="exampleFormControlTextarea1" rows="3" value={newProjet.description}></textarea>
                     </div>
                 </div>
     
                 <div className="formDroit">
     
                     {/* Pour les membres */}
-                    <div className="checkboxMembres">
+
+                    {/* <div className="checkboxMembres">
                         <p>Contacts:</p>
                        {contact.contacts.map((membre)=>(
                         <div className="form-check form-switch" key={membre.nom + membre.email}>
@@ -96,10 +129,11 @@ const CreerProjets = () =>{
                             <label className="form-check-label" htmlFor="flexSwitchCheckDefault">{membre.nom}</label>
                         </div>  
                        ))}
-                    </div>
+                    </div> */}
 
                     {/* Pour les clients */}
-                    <div className="selectClient">
+
+                    {/* <div className="selectClient">
                         <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Ajouter un Client</label>
                         <select className="form-select form-select-sm" aria-label=".form-select-sm example">
                             <option defaultValue>Pas de Client</option>
@@ -107,9 +141,10 @@ const CreerProjets = () =>{
                             <option value="1">Client2</option>
                             <option value="1">Client3</option>
                         </select>
-                    </div>
+                    </div> */}
+
                 </div>
-                <button className="btn btn-primary btnProjet" type="submit">Button</button>
+                <button className="btn btn-primary btnProjet" type="submit">Créer votre projet!</button>
             </form>)}
         </section>
     );

@@ -6,7 +6,7 @@ import CreerProjets from "../Projets/CreerProjets";
 import Membres from "../Membres/Membres";
 import CreerClient from "../Client/CreerClient";
 import DetailsClient from "../Client/DetailsClient";
-import Header from "../Header/Header";
+import ModifierProjets from "../Projets/ModifierProjets"
 import { authContexte } from "../../Contexte/authContexte";
 import { useContext } from "react";
 import Clients from "../Client/Client";
@@ -27,6 +27,10 @@ const App = () =>{
 		{
 		  path: "accueil",
 		  element: <TableauBord />,
+      chidlren:[{
+        path: ':idProjet',
+        element: <ModifierProjets/>
+      }]
 		},
     {
       path: 'creerprojet',

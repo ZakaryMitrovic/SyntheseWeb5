@@ -17,7 +17,7 @@ import Spinner from "../Spinner/Spinner";
 const Membres = () => {
   const ctx = useContext(authContexte);
   const [membres, setMembres] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const getMembre = async () => {
@@ -43,7 +43,7 @@ const Membres = () => {
     
 
     const membreRef = doc(db, "membres", ctx.user.uid);
-      await setDoc(
+    await setDoc(
         membreRef,
         {
           contacts: arrayUnion({
