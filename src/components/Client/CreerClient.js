@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import {arrayUnion, doc, setDoc} from 'firebase/firestore';
+import {addDoc, arrayUnion, collection, doc, setDoc} from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { useNavigate } from 'react-router-dom';
 import { authContexte } from "../../Contexte/authContexte";
@@ -30,19 +30,12 @@ const CreerClient = () =>{
 
         // Ajouter un client
 
-        const membreRef = doc(db, "membres", ctx.user.uid);
-        await setDoc( membreRef,
-            {
-                clients: arrayUnion({
-                nom: newClients.nom,
-                email: newClients.email,
-              }),
-    
-            },{ merge: true }
-    
-        );
+        const membreRef = collection(db, "membres", ctx.user.uid, "clients");
+        await addDoc(membreRef, {
+            nom: newClients.nom,
+            email: newClients.email
+        }, { merge: true });
 
-        
         navigate('/clients');
     };
 

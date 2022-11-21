@@ -1,20 +1,22 @@
 
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {useParams, useNavigate} from 'react-router-dom';
 import {arrayUnion, doc, getDoc, setDoc} from "firebase/firestore";
 import { db } from "../../config/firebase";
+import { authContexte } from "../../Contexte/authContexte";
 
 const DetailsClient = () =>{
 
     const [ClientDetails, setClientDetails] = useState(null);
     const params = useParams();
     const navigate = useNavigate();
+    const ctx = useContext(authContexte);
 
 
     useEffect(() => {
 
         const getClient = async() => {
-            const docRef = doc(db, 'membres', params.clientId);
+            const docRef = doc(db, 'membres', ctx.user.uid, "clients", params.clientId);
 
             const monDoc = await getDoc(docRef);
 
@@ -28,23 +30,18 @@ const DetailsClient = () =>{
         getClient();
     }, [params.clientId]);
 
+  
     
     const submitHandler = async(e) => {
         e.preventDefault();
 
-        // Modifier le client 
-        const docRef = doc(db, 'membres', params.clientId);
-        
-        await setDoc(docRef, 
-        {
-            
-            clients: arrayUnion({
-                nom: ClientDetails.clients[params.clientId].nom,
-                email: ClientDetails.clients[params.clientId].email
-              }),
-           
-        }, {merge: true});
+        const clientData = {
+            nom: ClientDetails.nom,
+            email:ClientDetails.email
+        };
 
+        await setDoc(doc(db, 'membres', ctx.user.uid, "clients", params.clientId), clientData);
+        
         navigate('/clients');
         
     };

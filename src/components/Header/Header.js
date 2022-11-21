@@ -41,12 +41,12 @@ const Header = (props) => {
       <Link style={{display:(isAuth ? "block" : "none")}} className="nav-link" to="/membres">Membres</Link>
       </li>
       <li className="nav-item" style={{display:(isAuth ? "block" : "none")}}>
-      <Link className="nav-link" to="/CreerClient">
+      <Link className="nav-link" to="/creerclient">
           Ajouter un client
         </Link>
       </li>
       <li className="nav-item" style={{display:(isAuth ? "block" : "none")}}>
-        <Link className="nav-link" to="/Clients">
+        <Link className="nav-link" to="/clients">
           Voir les Clients
         </Link>
       </li>

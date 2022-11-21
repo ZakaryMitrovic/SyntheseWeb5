@@ -10,18 +10,26 @@ const Clients = () =>{
     const navigate = useNavigate();
     const ctx = useContext(authContexte);
     
+   
+    
     // Pour reçevoir l'information des clients
-  
+
     useEffect(() => {
-
-        const unsub = onSnapshot(doc(db, 'membres', ctx.user.uid), (snapshot) => {
-
-            setClient({
-                ...snapshot.data(),
-                id: snapshot.id
-            })
-        });
-        return unsub;
+        const getClient = async () => {
+            const unsub = onSnapshot(collection(db, "membres", ctx.user.uid, "clients"), (snapshot) => {
+                setClient(
+                snapshot.docs.map((doc) => {
+                  return {
+                    ...doc.data(),
+                    id: doc.id,
+                  };
+                })
+              );
+              
+            });
+            return unsub;
+          };
+          getClient();
     }, [client.length]);
    
     
@@ -30,12 +38,13 @@ const Clients = () =>{
     
 
   const deleteHandler = async (index) => {
-    const clientRef = doc(db, "membres", ctx.user.uid);
+    const clientRef = doc(db, "membres", ctx.user.uid, "clients", index);
     
-    await setDoc(clientRef, {clients: arrayRemove({
-        nom: client.clients[index].nom,
-        email: client.clients[index].email,
-    })},{ merge: true });
+    await deleteDoc(clientRef, {
+        nom: client.nom,
+        email: client.email
+    }, { merge: true });
+    
     navigate('/clients');
     
   };
@@ -46,7 +55,7 @@ const Clients = () =>{
         client.length == 0 ? (null) : (
         <div>
         <section>
-        {client.clients.map(({nom,email} , index) => (
+        {client.map(({nom,email, id}) => (
 
 
             <div  className="card"  style={{width:18+'em'}}>
@@ -55,8 +64,8 @@ const Clients = () =>{
             <h5 className="card-title"> {nom} </h5>
             <p className="card-text"> {email} </p>
             
-            <Link to={`/clients/${index}`}><button className="btn btn-primary" >Modifier client</button></Link>
-            <button className="btn btn-primary" onClick={()=>deleteHandler(index)}  >Supprimer</button>
+            <Link to={`/clients/${id}`}><button className="btn btn-primary" >Modifier client</button></Link>
+            <button className="btn btn-primary" onClick={()=>deleteHandler(id)}  >Supprimer</button>
             </div>
             </div>
                    
