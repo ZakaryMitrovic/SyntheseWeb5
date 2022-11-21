@@ -64,13 +64,13 @@ const Membres = () => {
   useEffect(() => {
     // const membreRef = doc(db, "membres", ctx.user.uid);
     // const membreRechercher = query(membreRef, where("email", "==", search));
+    // setFilteredMembres(membreRechercher);
     setFilteredMembres(
       membres.filter(
         (user) =>
         user.email.toLowerCase().includes(search.toLowerCase())
       )
     );
-    // setFilteredMembres(membreRechercher);
   }, [search, membres]);
 
   return (

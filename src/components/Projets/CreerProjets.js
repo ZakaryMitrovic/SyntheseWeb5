@@ -39,7 +39,7 @@ const CreerProjets = () => {
 
     // Pour reçevoir l'information des clients
     useEffect(() => {
-        const unsub = onSnapshot(collection(db, 'clients'), (snapshot) => {
+        const unsub = onSnapshot(collection(db, 'membres', ctx.user.uid, 'clients'), (snapshot) => {
             setClient(snapshot.docs.map(doc => {
                 return {
                     ...doc.data(),
@@ -58,12 +58,13 @@ const CreerProjets = () => {
             };
         });
     };
+    console.log(newProjet)
 
     const SubmitForm = async (e) => {
         e.preventDefault();
 
-        //ERROR IS HERE, THIS IS WHAT I'VE TRIED SO FAR AND I CANNOT GET ANYTHING ELSE BUT THE ID OF THE MEMBER
         const Membre = contact.contacts.filter((user)=>selected.includes(user.id));
+        const Client = client.filter((user)=>newProjet.client.includes(user.id));
 
         const projetRef = collection(db, "membres", ctx.user.uid, "projets");
 
@@ -73,19 +74,8 @@ const CreerProjets = () => {
             color: newProjet.color,
             date: "Créé le "+showTime,
             membres: Membre,
-            clients: newProjet.client
+            client: Client
         }, { merge: true });
-
-        console.log(Projet.id) // id du projet qui se crée
-
-        console.log(Membre);
-        
-        // contact.contacts.map((membre)=>{
-        //     return{
-        //         const membreRef = collection(db, "membres", ctx.user.uid, "added")
-    
-        //     }
-        // })
 
         navigate('/projets');
     };
@@ -137,15 +127,15 @@ const CreerProjets = () => {
 
                         {/* Pour les clients */}
 
-                        {/* <div className="selectClient">
+                        <div className="selectClient">
                         <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Ajouter un Client</label>
-                        <select className="form-select form-select-sm" aria-label=".form-select-sm example">
+                        <select onChange={(e)=>updateProjet(e.target.value, 'client')} className="form-select form-select-sm" aria-label=".form-select-sm example">
                             <option defaultValue>Pas de Client</option>
-                            <option value="1">Client1</option>
-                            <option value="1">Client2</option>
-                            <option value="1">Client3</option>
+                            {client.map(({nom, email,id }, index)=>(
+                                <option value={id} key={id}>{nom}, {email}</option>
+                            ))}
                         </select>
-                    </div> */}
+                    </div>
 
                     </div>
                     <button className="btn btn-primary btnProjet" type="submit">Créer votre projet!</button>
