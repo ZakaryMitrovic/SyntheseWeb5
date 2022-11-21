@@ -26,8 +26,9 @@ const Projets = () => {
             });
             return unsub;
           };
-          getProjet();
-    }, [projet]);
+        getProjet();
+    }, [projet.length]);
+    
     return (
         <>
             {isLoading ? (<Spinner />) : (

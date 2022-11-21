@@ -1,13 +1,20 @@
-.list-group{
-    margin-top:25px;
-        & .imgMembresList{
-            height: 50px;
-            border-radius: 10px;
-        }
-        & .badges{
-            background-color: lightblue;
-            border-radius: 10px;
-            width: 30px;
-            text-align: center;
-        }
+div{
+    & .barreRecherche{
+        margin-top: 50px;
+    }
+    & .list-group{
+        margin-top:25px;
+            & .imgMembresList{
+                height: 50px;
+                border-radius: 10px;
+            }
+            & .badges{
+                background-color: lightblue;
+                border-radius: 10px;
+                width: 30px;
+                text-align: center;
+            }
+    }
 }
+
+

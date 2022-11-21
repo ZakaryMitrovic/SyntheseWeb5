@@ -52,14 +52,21 @@ const TableauBord = () => {
 
       /*POUR LES CLIENTS */
       useEffect(() => {
-        const unsub = onSnapshot(doc(db, "membres", ctx.user.uid), (snapshot) => {
-            setClients({
-                ...snapshot.data(),
-                id: snapshot.id
-            })
-            setIsLoading(false);
-        });
-        return unsub;
+        const getClient = async () => {
+            const unsub = onSnapshot(collection(db, "membres", ctx.user.uid, "clients"), (snapshot) => {
+                setClients(
+                snapshot.docs.map((doc) => {
+                  return {
+                    ...doc.data(),
+                    id: doc.id,
+                  };
+                })
+              );
+              setIsLoading(false);
+            });
+            return unsub;
+          };
+          getClient();
     }, [clients.length]);
 
     return (
@@ -75,8 +82,8 @@ const TableauBord = () => {
                         <section>
                             <Link to='/projets' className="Projets">
                                 <button className="btnLinkProjets btn btn-primary">Voir les projets</button>
-                                {projet.map(({ nom, description, color, date }, index) => (
-                                    <div className="card" style={{ width: 18 + 'em', border: `2px solid ${color}` }} key={nom + color}>
+                                {projet.map(({ nom, description, color, date, id }) => (
+                                    <div className="card" style={{ width: 18 + 'em', border: `2px solid ${color}` }} key={id}>
                                         <img src={"logo512.png"} className="card-img-top" alt="ImgProjet" />
                                         <div className="card-body">
                                             <h5 className="card-title">{nom}</h5>
@@ -91,8 +98,8 @@ const TableauBord = () => {
                     <article>
                             <Link to='/membres' className="ListMembres">
                                 <button className="btnLinkProjets btn btn-primary">Voir les nouveaux membres</button>
-                                {membres.map(({nom, email, photoURL}, index) => (
-                                    <div className="card" style={{ width: 18 + 'em'}} key={nom+email}>
+                                {membres.map(({nom, email, photoURL, id}) => (
+                                    <div className="card" style={{ width: 18 + 'em'}} key={id}>
                                         <img src={photoURL} className="card-img-top" alt={nom} referrerPolicy="no-referrer"/>
                                         <div className="card-body">
                                             <h5 className="card-title">{nom}</h5>
@@ -101,14 +108,14 @@ const TableauBord = () => {
                                     </div>
                                 ))}
                             </Link>
-                        {clients.clients.length === 0 ? (<Link to='/creerclient' className="ListClients">
+                        {clients.length === 0 ? (<Link to='/creerclient' className="ListClients">
                         <button className="btnLinkProjets btn btn-primary">Ajouter votre premier client!</button>
                         <p className="pCreerProjetAccueil">Vous avez 0 client!</p>    
                         </Link>) : (
                             <Link to='/clients' className="ListClients">
                             <button className="btnLinkProjets btn btn-primary">Voir vos clients</button>
-                            {clients.clients.map(({nom, email}, index) => (
-                                <div className="card" style={{ width: 18 + 'em'}} key={nom+email}>
+                            {clients.map(({nom, email, id}) => (
+                                <div className="card" style={{ width: 18 + 'em'}} key={id}>
                                     <img src={"logo512.png"} className="card-img-top" alt="ImgProjet" />
                                     <div className="card-body">
                                         <h5 className="card-title">{nom}</h5>

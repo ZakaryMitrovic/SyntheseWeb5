@@ -44,9 +44,9 @@ const ModifierProjets = () => {
         e.preventDefault();
 
         const projetData = {
-            nom: newProjet.nom,
-            description: newProjet.description,
-            color: newProjet.color,
+            nom: projetDetails.nom,
+            description: projetDetails.description,
+            color: projetDetails.color,
             date: "Modifier le " + showTime
         };
 
@@ -57,7 +57,7 @@ const ModifierProjets = () => {
     };
 
     const updateProjet = (texte, prop) => {
-        setNewProjet(current => {
+        setProjetDetails(current => {
             return {
                 ...current,
                 [prop]: texte
@@ -75,19 +75,19 @@ const ModifierProjets = () => {
                     {/* Couleur du Projet */}
                     <div className="input-group mb-3">
                         <span className="input-group-text" id="inputGroup-sizing-default">Couleur du projet</span>
-                        <input type="color" onChange={(e) => updateProjet(e.target.value, 'color')} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={newProjet.color}/>
+                        <input type="color" onChange={(e) => updateProjet(e.target.value, 'color')} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={projetDetails.color}/>
                     </div>
 
                     {/* Titre du Projet */}
                     <div className="input-group mb-3">
                         <span className="input-group-text" id="inputGroup-sizing-default">Nom du Projet</span>
-                        <input type="text" onChange={(e) => updateProjet(e.target.value, 'nom')} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={newProjet.nom}/>
+                        <input type="text" onChange={(e) => updateProjet(e.target.value, 'nom')} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={projetDetails.nom}/>
                     </div>
         
                     {/* Description du Projet */}
                     <div className="mb-3">
                         <label htmlFor="exampleFormControlTextarea1" className="form-label">Description du Projet</label>
-                        <textarea onChange={(e) => updateProjet(e.target.value, 'description')} className="form-control" id="exampleFormControlTextarea1" rows="3" value={newProjet.description}></textarea>
+                        <textarea onChange={(e) => updateProjet(e.target.value, 'description')} className="form-control" id="exampleFormControlTextarea1" rows="3" value={projetDetails.description}></textarea>
                     </div>
                 
                 </div>

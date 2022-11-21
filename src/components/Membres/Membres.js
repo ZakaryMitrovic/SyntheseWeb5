@@ -62,6 +62,10 @@ const Membres = () => {
 
   return (
     <div>
+      <section className="barreRecherche">
+        <label htmlFor="inputPassword5" className="form-label">Rechercher un membre</label>
+        <input type="text" className="form-control" placeholder="example@courriel.ca"/>
+      </section>
       {isLoading ? (
         <Spinner />
       ) : (
@@ -70,7 +74,6 @@ const Membres = () => {
             <li className="list-group-item d-flex justify-content-between align-items-center" key={membre.nom + membre.email}>
               <img className="imgMembresList" src={`${membre.photoURL}`} alt="photoMembre" />
               {membre.nom} <p>{membre.email}</p>
-              {/* <span className="badges">{membre.projets.length}</span> */}
               <span className="material-symbols-outlined" onClick={(e) => AddContact(e, membre)}>add</span>
             </li>
           ))}
