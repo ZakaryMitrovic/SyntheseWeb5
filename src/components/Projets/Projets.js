@@ -11,17 +11,6 @@ const Projets = () => {
     const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     const unsub = onSnapshot(doc(db, "membres", ctx.user.uid, "projets", ctx.user.uid), (snapshot) => {
-    //         setProjets({
-    //             ...snapshot.data(),
-    //             id: snapshot.id
-    //         })
-    //         setIsLoading(false);
-    //     });
-    //     return unsub;
-    // }, [projet.length]);
-
     useEffect(() => {
         const getProjet = async () => {
             const unsub = onSnapshot(collection(db, "membres", ctx.user.uid, "projets"), (snapshot) => {
@@ -39,7 +28,6 @@ const Projets = () => {
           };
           getProjet();
     }, [projet]);
-    
     return (
         <>
             {isLoading ? (<Spinner />) : (
@@ -50,11 +38,11 @@ const Projets = () => {
                     </section>) : (<>
                         <Link to="/creerprojet" className="btn btn-primary">Créer un projet</Link>
                         <div className="list-group">
-                            {projet.map(({ nom, description, color, date }, id) => (
+                            {projet.map(({ nom, description, color, date, id }) => (
                                 <Link to={`/projets/${id}`} className="list-group-item list-group-item-action flex-column align-items-start" style={{ border: `2px solid ${color}` }} key={nom + color}>
                                     <div className="d-flex w-100 justify-content-between">
                                         <h5 className="mb-1">{nom}</h5>
-                                        <small>{date}</small>
+                                        <small><i>{date}</i></small>
                                     </div>
                                     <p className="mb-1">{description}</p>
                                     <small>membres </small>

@@ -67,7 +67,7 @@ const CreerProjets = () => {
             nom: newProjet.nom,
             description: newProjet.description,
             color: newProjet.color,
-            date: showTime
+            date: "Créé le "+showTime
         }, { merge: true });
 
 

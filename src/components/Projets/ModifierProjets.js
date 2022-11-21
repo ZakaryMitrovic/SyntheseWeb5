@@ -46,10 +46,11 @@ const ModifierProjets = () => {
         const projetData = {
             nom: newProjet.nom,
             description: newProjet.description,
-            color: newProjet.color
+            color: newProjet.color,
+            date: "Modifier le " + showTime
         };
 
-        await setDoc(doc(db, 'membres', ctx.user.uid, "projets", ctx.user.uid), projetData);
+        await setDoc(doc(db, 'membres', ctx.user.uid, "projets", params.projetId), projetData);
         
         navigate('/projets');
         

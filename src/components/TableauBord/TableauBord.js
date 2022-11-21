@@ -10,6 +10,7 @@ const TableauBord = () => {
     const [projet, setProjets] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [membres, setMembres] = useState([]);
+    const [clients, setClients] = useState([]);
 
     /*POUR LES PROJETS */
     useEffect(() => {
@@ -49,6 +50,18 @@ const TableauBord = () => {
         getMembre();
       }, [membres]);
 
+      /*POUR LES CLIENTS */
+      useEffect(() => {
+        const unsub = onSnapshot(doc(db, "membres", ctx.user.uid), (snapshot) => {
+            setClients({
+                ...snapshot.data(),
+                id: snapshot.id
+            })
+            setIsLoading(false);
+        });
+        return unsub;
+    }, [clients.length]);
+
     return (
         <div>
             {isLoading ? (<Spinner />) : (
@@ -62,12 +75,13 @@ const TableauBord = () => {
                         <section>
                             <Link to='/projets' className="Projets">
                                 <button className="btnLinkProjets btn btn-primary">Voir les projets</button>
-                                {projet.map(({ nom, description, color }, index) => (
+                                {projet.map(({ nom, description, color, date }, index) => (
                                     <div className="card" style={{ width: 18 + 'em', border: `2px solid ${color}` }} key={nom + color}>
                                         <img src={"logo512.png"} className="card-img-top" alt="ImgProjet" />
                                         <div className="card-body">
                                             <h5 className="card-title">{nom}</h5>
                                             <p className="card-text">{description}</p>
+                                            <small><i>{date}</i></small>
                                         </div>
                                     </div>
                                 ))}
@@ -87,13 +101,13 @@ const TableauBord = () => {
                                     </div>
                                 ))}
                             </Link>
-                        {/* {projet.clients.length === 0 ? (<Link to='/creerclient' className="ListClients">
+                        {clients.clients.length === 0 ? (<Link to='/creerclient' className="ListClients">
                         <button className="btnLinkProjets btn btn-primary">Ajouter votre premier client!</button>
                         <p className="pCreerProjetAccueil">Vous avez 0 client!</p>    
                         </Link>) : (
                             <Link to='/clients' className="ListClients">
                             <button className="btnLinkProjets btn btn-primary">Voir vos clients</button>
-                            {projet.clients.map(({nom, email}, index) => (
+                            {clients.clients.map(({nom, email}, index) => (
                                 <div className="card" style={{ width: 18 + 'em'}} key={nom+email}>
                                     <img src={"logo512.png"} className="card-img-top" alt="ImgProjet" />
                                     <div className="card-body">
@@ -103,7 +117,7 @@ const TableauBord = () => {
                                 </div>
                             ))}
                         </Link>
-                        )} */}
+                        )}
                     </article>
                 </section>
             )}
