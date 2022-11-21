@@ -18,6 +18,11 @@ const Header = (props) => {
 
   return (
     <ul className="nav nav-tabs">
+      {/* Afficher l'utilisateur une fois inscript */}
+      {(isAuth ? <li className="nav-item Utilisateur"style={{display:(isAuth ? "flex" : "none")}}>
+        <img className="imgUtilisateur" src={`${ctx.user.photoURL}`} alt={ctx.user.displayName}/></li> : null)}
+
+      {/* Afficher l'authentification (si nécessaire) */}
       <li className="nav-item" style={{display:(isAuth ? "none" : "block")}}>
         <Link className="nav-link" to="/login">
           Authentification
@@ -30,7 +35,7 @@ const Header = (props) => {
         </Link>
       </li>
       <li className="nav-item" style={{display:(isAuth ? "block" : "none")}}>
-      <Link style={{display:(isAuth ? "block" : "none")}} className="nav-link" to="/creerprojet">Créer un Projet</Link>
+      <Link style={{display:(isAuth ? "block" : "none")}} className="nav-link" to="/projets">Projets</Link>
       </li>
       <li className="nav-item" style={{display:(isAuth ? "block" : "none")}}>
       <Link style={{display:(isAuth ? "block" : "none")}} className="nav-link" to="/membres">Membres</Link>
@@ -48,7 +53,6 @@ const Header = (props) => {
       <li className="nav-item">
         <button onClick={e=>btnDeconnexion(e)} style={{display:(isAuth ? "block" : "none")}} className="nav-link">Déconnexion</button>
       </li>
-      {(isAuth ? <li className="nav-item" style={{display:(isAuth ? "block" : "none")}}><p className="nav-link">{ctx.user.displayName}</p></li> : null)}
     </ul>
   );
 };

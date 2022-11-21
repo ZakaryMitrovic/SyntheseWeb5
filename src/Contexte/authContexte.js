@@ -45,6 +45,7 @@ const AuthProvider = ({ children }) => {
       await setDoc(docRef, {
             nom: creds.user.displayName,
             email: creds.user.email,
+            photoURL: creds.user.photoURL,
             projets: [],
             contacts: [],
             clients: []

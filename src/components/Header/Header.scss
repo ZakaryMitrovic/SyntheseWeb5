@@ -1,0 +1,22 @@
+ul{
+    margin-left: 5px;
+    gap: 5px;
+    & .Utilisateur{
+        
+        & .imgUtilisateur{
+            align-self: center; 
+            height: 35px;
+            border-radius: 10px;   
+        }
+    }
+
+    & li{
+        & .nav-link{
+            color: black;
+        }& .nav-link:hover{
+            color: black;
+        }& .nav-link:focus{
+            color: black;
+        }
+    }
+}

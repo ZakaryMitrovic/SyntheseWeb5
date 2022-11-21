@@ -6,6 +6,7 @@ import CreerProjets from "../Projets/CreerProjets";
 import Membres from "../Membres/Membres";
 import CreerClient from "../Client/CreerClient";
 import DetailsClient from "../Client/DetailsClient";
+import Projets from "../Projets/Projets"
 import ModifierProjets from "../Projets/ModifierProjets"
 import { authContexte } from "../../Contexte/authContexte";
 import { useContext } from "react";
@@ -27,11 +28,17 @@ const App = () =>{
 		{
 		  path: "accueil",
 		  element: <TableauBord />,
-      chidlren:[{
-        path: ':idProjet',
-        element: <ModifierProjets/>
-      }]
 		},
+    {
+      path: 'projets',
+      element: <Projets />,
+      children: [
+        {
+          path: ':projetId',
+          element: <ModifierProjets/>,
+        },
+      ],
+    },
     {
       path: 'creerprojet',
       element: <CreerProjets/>

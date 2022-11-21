@@ -41,7 +41,6 @@ const Membres = () => {
     e.preventDefault();
     setIsLoading(true);
     
-
     const membreRef = doc(db, "membres", ctx.user.uid);
     await setDoc(
         membreRef,
@@ -49,7 +48,8 @@ const Membres = () => {
           contacts: arrayUnion({
             nom: membre.nom,
             email: membre.email,
-            id: membre.id
+            id: membre.id,
+            photoURL: membre.photoURL
           }),
         },
         { merge: true }
@@ -68,6 +68,7 @@ const Membres = () => {
         <ul className="list-group">
           {membres.map((membre, id) => (
             <li className="list-group-item d-flex justify-content-between align-items-center" key={membre.nom + membre.email}>
+              <img className="imgMembresList" src={`${membre.photoURL}`} alt="photoMembre" />
               {membre.nom} <p>{membre.email}</p>
               <span className="badges">{membre.projets.length}</span>
               <span className="material-symbols-outlined" onClick={(e) => AddContact(e, membre)}>add</span>

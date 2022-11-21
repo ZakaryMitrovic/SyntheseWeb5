@@ -42,7 +42,7 @@ const Clients = () =>{
         {client.clients.map(({nom,email, id}) => (
 
 
-            <div key={id} className="card"  style={{width:18+'em'}}>
+            <div key={id+nom} className="card"  style={{width:18+'em'}}>
             <img src={"logo192.png" } className="card-img-top" alt="..."/>
             <div className="card-body">
             <h5 className="card-title"> {nom} </h5>

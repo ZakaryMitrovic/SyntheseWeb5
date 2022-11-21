@@ -14,7 +14,7 @@ const CreerProjets = () =>{
     const [newProjet, setNewProjet] = useState({
         description: '',
         nom: '',
-        color: '#rrggbb',
+        color: '#000000',
         membres: [],
         client: {}
     });
@@ -71,7 +71,7 @@ const CreerProjets = () =>{
             { merge: true }
         );
         console.log("it works");
-        navigate('/accueil');
+        navigate('/projets');
     };
     
     const CheckMembres = async(e, membreId, nomMembre, emailMembre) => {
