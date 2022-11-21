@@ -30,10 +30,6 @@ const CreerClient = () =>{
 
         // Ajouter un client
 
-        // await addDoc(collection(db, 'membres', ctx.user.uid), {
-        //     nom: newClients.nom,
-        //     email: newClients.email
-        // });
         const membreRef = doc(db, "membres", ctx.user.uid);
         await setDoc( membreRef,
             {
