@@ -19,6 +19,7 @@ const CreerProjets = () => {
         client: {}
     });
     const [selected, setSelected] = useState([]);
+
     //Pour recevoir la date actuel (jj/mm/aaaa)
     const current = new Date();
     const showTime = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`;
@@ -70,8 +71,6 @@ const CreerProjets = () => {
             date: "Créé le "+showTime
         }, { merge: true });
 
-
-        console.log("it works");
         navigate('/projets');
     };
 
