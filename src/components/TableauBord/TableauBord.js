@@ -93,7 +93,7 @@ const TableauBord = () => {
                                 <button className="btnLinkProjets btn btn-primary">Voir les nouveaux membres</button>
                                 {membres.map(({nom, email, photoURL}, index) => (
                                     <div className="card" style={{ width: 18 + 'em'}} key={nom+email}>
-                                        <img src={photoURL} className="card-img-top" alt={nom} referrerolicy="no-referrer"/>
+                                        <img src={photoURL} className="card-img-top" alt={nom} referrerPolicy="no-referrer"/>
                                         <div className="card-body">
                                             <h5 className="card-title">{nom}</h5>
                                             <p className="card-text">{email}</p>

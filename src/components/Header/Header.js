@@ -20,7 +20,7 @@ const Header = (props) => {
     <ul className="nav nav-tabs">
       {/* Afficher l'utilisateur une fois inscript */}
       {(isAuth ? <li className="nav-item Utilisateur"style={{display:(isAuth ? "flex" : "none")}}>
-        <img className="imgUtilisateur" src={`${ctx.user.photoURL}`} alt={ctx.user.displayName}/></li> : null)}
+        <img referrerPolicy="no-referrer" className="imgUtilisateur" src={`${ctx.user.photoURL}`} alt={ctx.user.displayName}/></li> : null)}
 
       {/* Afficher l'authentification (si nécessaire) */}
       <li className="nav-item" style={{display:(isAuth ? "none" : "block")}}>
