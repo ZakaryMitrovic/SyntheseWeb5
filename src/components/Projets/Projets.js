@@ -28,7 +28,7 @@ const Projets = () => {
           };
         getProjet();
     }, [projet.length]);
-    
+
     return (
         <>
             {isLoading ? (<Spinner />) : (
@@ -49,9 +49,10 @@ const Projets = () => {
                                     <small>membres </small>
                                     <small>/ client</small>
                                 </Link>
+                                
                             ))}
+                            <div><Outlet /></div>
                         </div>
-                        <div><Outlet /></div>
                     </>)}
 
                 </section>

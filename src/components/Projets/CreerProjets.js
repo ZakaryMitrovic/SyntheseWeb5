@@ -62,32 +62,36 @@ const CreerProjets = () => {
     const SubmitForm = async (e) => {
         e.preventDefault();
 
+        //ERROR IS HERE, THIS IS WHAT I'VE TRIED SO FAR AND I CANNOT GET ANYTHING ELSE BUT THE ID OF THE MEMBER
+        const Membre = contact.contacts.filter((user)=>selected.includes(user.id));
+
         const projetRef = collection(db, "membres", ctx.user.uid, "projets");
 
-        await addDoc(projetRef, {
+        const Projet = await addDoc(projetRef, {
             nom: newProjet.nom,
             description: newProjet.description,
             color: newProjet.color,
-            date: "Créé le "+showTime
+            date: "Créé le "+showTime,
+            membres: Membre,
+            clients: newProjet.client
         }, { merge: true });
+
+        console.log(Projet.id) // id du projet qui se crée
+
+        console.log(Membre);
+        
+        // contact.contacts.map((membre)=>{
+        //     return{
+        //         const membreRef = collection(db, "membres", ctx.user.uid, "added")
+    
+        //     }
+        // })
 
         navigate('/projets');
     };
-
-    const CheckMembres = async (e, membreId, nomMembre, emailMembre) => {
+    const CheckMembres = async (e) => {
         const { checked, value } = e.currentTarget;
-        setSelected(
-            prev => checked
-                ? [...prev, value]
-                : prev.filter(val => val !== value)
-        );
-
-        //FIX THIS
-        const membrePourAjout = { [membreId]: membreId, nom: nomMembre, email: emailMembre };
-        newProjet.membres.map((membre) => {
-            membrePourAjout.push({ [membreId]: membre.id, nom: membre.nom, email: membre.email })
-        })
-        console.log(membrePourAjout);
+        setSelected(prev => checked ? [...prev, value] : prev.filter(val => val !== value));
 
     };
 
@@ -121,15 +125,15 @@ const CreerProjets = () => {
 
                         {/* Pour les membres */}
 
-                        {/* <div className="checkboxMembres">
+                        <div className="checkboxMembres">
                         <p>Contacts:</p>
                        {contact.contacts.map((membre)=>(
                         <div className="form-check form-switch" key={membre.nom + membre.email}>
-                            <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" onChange={(e)=>CheckMembres(e, e.target.value, membre.nom, membre.email)} value={membre.id} checked={selected.some(val => val === membre.id)}/>
+                            <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" onChange={(e)=>CheckMembres(e)} value={membre.id} checked={selected.some(val => val === membre.id)}/>
                             <label className="form-check-label" htmlFor="flexSwitchCheckDefault">{membre.nom}</label>
                         </div>  
                        ))}
-                    </div> */}
+                    </div>
 
                         {/* Pour les clients */}
 

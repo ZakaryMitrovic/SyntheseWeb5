@@ -8,11 +8,8 @@ div{
                 height: 50px;
                 border-radius: 10px;
             }
-            & .badges{
-                background-color: lightblue;
-                border-radius: 10px;
-                width: 30px;
-                text-align: center;
+            & .material-symbols-outlined:hover{
+                cursor: pointer;
             }
     }
 }

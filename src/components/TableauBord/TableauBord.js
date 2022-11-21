@@ -29,7 +29,7 @@ const TableauBord = () => {
             return unsub;
           };
           getProjet();
-    }, [projet]);
+    }, [projet.length]);
     
     /*POUR LES MEMBRES */
     useEffect(() => {
