@@ -50,9 +50,6 @@ const AuthProvider = ({ children }) => {
             contacts: [],
             clients: []
           });
-      await setDoc(projRef, {
-          projets:[]
-          });
     } else {
       // Existing user, document created already. 
       await getDoc(docRef);
