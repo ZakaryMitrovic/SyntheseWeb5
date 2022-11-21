@@ -29,14 +29,14 @@ const Projets = () => {
         getProjet();
     }, [projet.length]);
 
-    const TEST= ()=>{
-        projet.map((projet) =>(
-            projet.membres.map((membre)=>(
-                console.log(membre.nom)
-            ))
-        ))
-    }
-    TEST();
+    // const TEST= ()=>{
+    //     projet.map((projet) =>(
+    //         projet.client.map(({nom})=>(
+    //             console.log(nom)
+    //         ))
+    //     ))
+    // }
+    // TEST();
     return (
         <>
             {isLoading ? (<Spinner />) : (
@@ -47,17 +47,19 @@ const Projets = () => {
                     </section>) : (<>
                         <Link to="/creerprojet" className="btn btn-primary">Créer un projet</Link>
                         <div className="list-group">
-                            {projet.map(({ nom, description, color, date, id, membres}) => (
+                            {projet.map(({ nom, description, color, date, id, membres, client}) => (
                                 <Link to={`/projets/${id}`} className="list-group-item list-group-item-action flex-column align-items-start" style={{ border: `2px solid ${color}` }} key={nom + color}>
                                     <div className="d-flex w-100 justify-content-between">
                                         <h5 className="mb-1">{nom}</h5>
                                         <small><i>{date}</i></small>
                                     </div>
                                     <p className="mb-1">{description}</p>
-                                    {membres.map(({nom, email, id})=>(
+                                    {membres.map(({nom, id})=>(
                                         <small key={id}>{nom}; </small> 
                                     ))}
-                                    <small>/ client</small>
+                                    {client.map(({nom, id})=>(
+                                        <small key={id} style={{float: 'right'}}>{nom}</small> 
+                                    ))}
                                 </Link>
                                 
                             ))}
