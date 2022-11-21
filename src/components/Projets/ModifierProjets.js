@@ -1,7 +1,7 @@
 import { useEffect, useState, useContext } from 'react';
 import {useParams, useNavigate} from 'react-router-dom';
 import {doc, getDoc, setDoc, arrayUnion, addDoc} from "firebase/firestore";
-import {ref, update} from "firebase/database";
+import {ref, update, getDatabase} from "firebase/database";
 import { db } from "../../config/firebase";
 import { authContexte } from "../../Contexte/authContexte";
 import { ref as sRef } from 'firebase/storage';
@@ -26,7 +26,7 @@ const ModifierProjets = () => {
     useEffect(() => {
 
         const getProjet = async() => {
-            const docRef = doc(db, 'projets', params.projetId);
+            const docRef = doc(db, 'membres', ctx.user.uid, "projets", params.projetId);
 
             const monDoc = await getDoc(docRef);
 
@@ -39,24 +39,17 @@ const ModifierProjets = () => {
         };
         getProjet();
     }, [params.projetId]);
-    
+
     const submitHandler = async(e) => {
         e.preventDefault();
 
-        // Modifier le projet 
+        const projetData = {
+            nom: newProjet.nom,
+            description: newProjet.description,
+            color: newProjet.color
+        };
 
-        //db, "membres/"+ctx.user.uid+"/projects/"+params.projetId
-
-        const membreRef = doc(db,"membres", ctx.user.uid); //Gets document off collection "membres" with uid of user
-        await setDoc(doc(db,"membres", ctx.user.uid),
-            {
-                nom: newProjet.nom,
-                description: newProjet.description,
-                color: newProjet.color,
-                date:"Modifier le: "+ showTime
-            },
-            { merge: true }
-        );
+        await setDoc(doc(db, 'membres', ctx.user.uid, "projets", ctx.user.uid), projetData);
         
         navigate('/projets');
         
@@ -78,22 +71,23 @@ const ModifierProjets = () => {
             
             <form style={{marginTop:50+'px'}} noValidate onSubmit={submitHandler} >
                 <div>
-                    {/* Nom du projet */}
+                    {/* Couleur du Projet */}
                     <div className="input-group mb-3">
-                        <span className="input-group-text" id="inputGroup-sizing-default">Nom du projet</span>
-                        <input  onChange={(e) => updateProjet(e.target.value, 'nom')} value={projetDetails.nom}  type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"/>
+                        <span className="input-group-text" id="inputGroup-sizing-default">Couleur du projet</span>
+                        <input type="color" onChange={(e) => updateProjet(e.target.value, 'color')} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={newProjet.color}/>
                     </div>
-                    {/* description du projet */}
+
+                    {/* Titre du Projet */}
                     <div className="input-group mb-3">
-                        <span className="input-group-text" id="inputGroup-sizing-default">description du projet</span>
-                        <input  onChange={(e) => updateProjet(e.target.value, 'description')} value={projetDetails.email}  type="text" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"/>
-                    </div>
-                    {/* Couleur du projet */}
-                    <div className="input-group mb-3">
-                        <span className="input-group-text" id="inputGroup-sizing-default">Color du projet</span>
-                        <input  onChange={(e) => updateProjet(e.target.value, 'color')} value={projetDetails.email}  type="color" className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default"/>
+                        <span className="input-group-text" id="inputGroup-sizing-default">Nom du Projet</span>
+                        <input type="text" onChange={(e) => updateProjet(e.target.value, 'nom')} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={newProjet.nom}/>
                     </div>
         
+                    {/* Description du Projet */}
+                    <div className="mb-3">
+                        <label htmlFor="exampleFormControlTextarea1" className="form-label">Description du Projet</label>
+                        <textarea onChange={(e) => updateProjet(e.target.value, 'description')} className="form-control" id="exampleFormControlTextarea1" rows="3" value={newProjet.description}></textarea>
+                    </div>
                 
                 </div>
                 <button className="btn btn-primary btnProjet" type="submit">Confirmer</button>

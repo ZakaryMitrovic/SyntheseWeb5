@@ -34,6 +34,7 @@ const AuthProvider = ({ children }) => {
     setUser(creds.user);
 
     const docRef = doc(db, 'membres', creds.user.uid);
+    const projRef = doc(db, 'membres', creds.user.uid, "projets", creds.user.uid);
     //faire une condition si l'utilisateur existe dans la base de donner
     //si oui, getdoc
     //sinon, setdoc
@@ -46,13 +47,16 @@ const AuthProvider = ({ children }) => {
             nom: creds.user.displayName,
             email: creds.user.email,
             photoURL: creds.user.photoURL,
-            projets: [],
             contacts: [],
             clients: []
+          });
+      await setDoc(projRef, {
+          projets:[]
           });
     } else {
       // Existing user, document created already. 
       await getDoc(docRef);
+      await getDoc(projRef);
     }
     
   };

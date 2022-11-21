@@ -11,17 +11,26 @@ const TableauBord = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [membres, setMembres] = useState([]);
 
+    /*POUR LES PROJETS */
     useEffect(() => {
-        const unsub = onSnapshot(doc(db, 'membres', ctx.user.uid), (snapshot) => {
-            setProjets({
-                ...snapshot.data(),
-                id: snapshot.id
-            })
-            setIsLoading(false);
-        });
-        return unsub;
-    }, [projet.length]);
-
+        const getProjet = async () => {
+            const unsub = onSnapshot(collection(db, "membres", ctx.user.uid, "projets"), (snapshot) => {
+              setProjets(
+                snapshot.docs.map((doc) => {
+                  return {
+                    ...doc.data(),
+                    id: doc.id,
+                  };
+                })
+              );
+              setIsLoading(false);
+            });
+            return unsub;
+          };
+          getProjet();
+    }, [projet]);
+    
+    /*POUR LES MEMBRES */
     useEffect(() => {
         const getMembre = async () => {
           const unsub = onSnapshot(collection(db, "membres"), (snapshot) => {
@@ -44,7 +53,7 @@ const TableauBord = () => {
         <div>
             {isLoading ? (<Spinner />) : (
                 <section>
-                    {projet.projets.length === 0 ? (
+                    {projet.length === 0 ? (
                         <Link to='/creerprojet' className="Projets">
                             <button className="btnLinkProjets btn btn-primary">Créer votre premier projet!</button>
                             <p className="pCreerProjetAccueil">Vous avez 0 projets!</p>    
@@ -53,7 +62,7 @@ const TableauBord = () => {
                         <section>
                             <Link to='/projets' className="Projets">
                                 <button className="btnLinkProjets btn btn-primary">Voir les projets</button>
-                                {projet.projets.map(({ nom, description, color }, index) => (
+                                {projet.map(({ nom, description, color }, index) => (
                                     <div className="card" style={{ width: 18 + 'em', border: `2px solid ${color}` }} key={nom + color}>
                                         <img src={"logo512.png"} className="card-img-top" alt="ImgProjet" />
                                         <div className="card-body">
@@ -70,7 +79,7 @@ const TableauBord = () => {
                                 <button className="btnLinkProjets btn btn-primary">Voir les nouveaux membres</button>
                                 {membres.map(({nom, email, photoURL}, index) => (
                                     <div className="card" style={{ width: 18 + 'em'}} key={nom+email}>
-                                        <img src={photoURL} className="card-img-top" alt={nom} referrerPolicy="no-referrer"/>
+                                        <img src={photoURL} className="card-img-top" alt={nom} referrerolicy="no-referrer"/>
                                         <div className="card-body">
                                             <h5 className="card-title">{nom}</h5>
                                             <p className="card-text">{email}</p>
@@ -78,7 +87,7 @@ const TableauBord = () => {
                                     </div>
                                 ))}
                             </Link>
-                        {projet.clients.length === 0 ? (<Link to='/creerclient' className="ListClients">
+                        {/* {projet.clients.length === 0 ? (<Link to='/creerclient' className="ListClients">
                         <button className="btnLinkProjets btn btn-primary">Ajouter votre premier client!</button>
                         <p className="pCreerProjetAccueil">Vous avez 0 client!</p>    
                         </Link>) : (
@@ -94,7 +103,7 @@ const TableauBord = () => {
                                 </div>
                             ))}
                         </Link>
-                        )}
+                        )} */}
                     </article>
                 </section>
             )}

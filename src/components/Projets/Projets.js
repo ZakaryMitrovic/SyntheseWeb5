@@ -11,28 +11,46 @@ const Projets = () => {
     const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        const unsub = onSnapshot(doc(db, 'membres', ctx.user.uid), (snapshot) => {
-            setProjets({
-                ...snapshot.data(),
-                id: snapshot.id
-            })
-            setIsLoading(false);
-        });
-        return unsub;
-    }, [projet.length]);
+    // useEffect(() => {
+    //     const unsub = onSnapshot(doc(db, "membres", ctx.user.uid, "projets", ctx.user.uid), (snapshot) => {
+    //         setProjets({
+    //             ...snapshot.data(),
+    //             id: snapshot.id
+    //         })
+    //         setIsLoading(false);
+    //     });
+    //     return unsub;
+    // }, [projet.length]);
 
+    useEffect(() => {
+        const getProjet = async () => {
+            const unsub = onSnapshot(collection(db, "membres", ctx.user.uid, "projets"), (snapshot) => {
+              setProjets(
+                snapshot.docs.map((doc) => {
+                  return {
+                    ...doc.data(),
+                    id: doc.id,
+                  };
+                })
+              );
+              setIsLoading(false);
+            });
+            return unsub;
+          };
+          getProjet();
+    }, [projet]);
+    
     return (
         <>
             {isLoading ? (<Spinner />) : (
                 <section className='Projets'>
-                    {projet.projets.length === 0 ? (<section className="SectionVide">
+                    {projet.length === 0 ? (<section className="SectionVide">
                         <h1>Vous avez 0 projet!</h1>
                         <Link to="/creerprojet" className="btn btn-primary">Créer un projet</Link>
                     </section>) : (<>
                         <Link to="/creerprojet" className="btn btn-primary">Créer un projet</Link>
                         <div className="list-group">
-                            {projet.projets.map(({ nom, description, color, date }, id) => (
+                            {projet.map(({ nom, description, color, date }, id) => (
                                 <Link to={`/projets/${id}`} className="list-group-item list-group-item-action flex-column align-items-start" style={{ border: `2px solid ${color}` }} key={nom + color}>
                                     <div className="d-flex w-100 justify-content-between">
                                         <h5 className="mb-1">{nom}</h5>
