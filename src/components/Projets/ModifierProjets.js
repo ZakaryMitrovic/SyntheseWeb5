@@ -8,13 +8,12 @@ import { ref as sRef } from 'firebase/storage';
 
 const ModifierProjets = () => {
     const ctx = useContext(authContexte);
-    const [projetDetails, setProjetDetails] = useState(null);
     const [contact, setContact] = useState([]);
     const [client, setClient] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const params = useParams();
     const navigate = useNavigate();
-    const [newProjet, setNewProjet] = useState({
+    const [projetDetails, setProjetDetails] = useState({
         description: '',
         nom: '',
         color: '#000000',
@@ -94,14 +93,14 @@ const ModifierProjets = () => {
         e.preventDefault();
 
         const Membre = contact.contacts.filter((user)=>selected.includes(user.id));
-        const Client = client.filter((user)=>newProjet.client.includes(user.id));
+        const Client = client.filter((user)=>projetDetails.client.includes(user.id));
 
-        const projetData = collection(db, "membres", ctx.user.uid, "projets");
+        const projetData = doc(db, "membres", ctx.user.uid, "projets");
 
         const Projet = await setDoc(projetData, {
-            nom: newProjet.nom,
-            description: newProjet.description,
-            color: newProjet.color,
+            nom: projetDetails.nom,
+            description: projetDetails.description,
+            color: projetDetails.color,
             date: "Créé le "+showTime,
             membres: Membre,
             client: Client
@@ -109,7 +108,7 @@ const ModifierProjets = () => {
 
         navigate('/projets');
     };
-
+ 
     const CheckMembres = async (e) => {
         const { checked, value } = e.currentTarget;
         setSelected(prev => checked ? [...prev, value] : prev.filter(val => val !== value));
@@ -131,8 +130,7 @@ const ModifierProjets = () => {
     };
 
     return(
-        projetDetails == null ? (null) : (
-          
+        
             <section>
             
             <form style={{marginTop:50+'px'}} noValidate onSubmit={SubmitForm} >
@@ -140,19 +138,19 @@ const ModifierProjets = () => {
                         {/* Couleur du Projet */}
                         <div className="input-group mb-3">
                             <span className="input-group-text" id="inputGroup-sizing-default">Couleur du projet</span>
-                            <input type="color" onChange={(e) => updateProjet(e.target.value, 'color')} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={newProjet.color} />
+                            <input type="color" onChange={(e) => updateProjet(e.target.value, 'color')} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={projetDetails.color} />
                         </div>
 
                         {/* Titre du Projet */}
                         <div className="input-group mb-3">
                             <span className="input-group-text" id="inputGroup-sizing-default">Nom du Projet</span>
-                            <input type="text" onChange={(e) => updateProjet(e.target.value, 'nom')} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={newProjet.nom} />
+                            <input type="text" onChange={(e) => updateProjet(e.target.value, 'nom')} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={projetDetails.nom} />
                         </div>
 
                         {/* Description du Projet */}
                         <div className="mb-3">
                             <label htmlFor="exampleFormControlTextarea1" className="form-label">Description du Projet</label>
-                            <textarea onChange={(e) => updateProjet(e.target.value, 'description')} className="form-control" id="exampleFormControlTextarea1" rows="3" value={newProjet.description}></textarea>
+                            <textarea onChange={(e) => updateProjet(e.target.value, 'description')} className="form-control" id="exampleFormControlTextarea1" rows="3" value={projetDetails.description}></textarea>
                         </div>
                     </div>
 
@@ -162,12 +160,12 @@ const ModifierProjets = () => {
 
                         <div className="checkboxMembres">
                         <p>Contacts:</p>
-                       {contact.contacts.map((membre)=>(
+                       {/* {contact.contacts.map((membre)=>(
                         <div className="form-check form-switch" key={membre.nom + membre.email}>
                             <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" onChange={(e)=>CheckMembres(e)} value={membre.id} checked={selected.some(val => val === membre.id)}/>
                             <label className="form-check-label" htmlFor="flexSwitchCheckDefault">{membre.nom}</label>
                         </div>  
-                       ))}
+                       ))} */}
                     </div>
 
                         {/* Pour les clients */}
@@ -176,17 +174,17 @@ const ModifierProjets = () => {
                         <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Ajouter un Client</label>
                         <select onChange={(e)=>updateProjet(e.target.value, 'client')} className="form-select form-select-sm" aria-label=".form-select-sm example">
                             <option defaultValue>Pas de Client</option>
-                            {client.map(({nom, email,id }, index)=>(
+                            {/* {client.map(({nom, email,id },)=>(
                                 <option value={id} key={id}>{nom}, {email}</option>
-                            ))}
+                            ))} */}
                         </select>
                     </div>
 
                     </div>
                     <button className="btn btn-primary btnProjet" type="submit">Modifier votre projet!</button>
             </form>
+
         </section>
         )
-    )
 };
 export default ModifierProjets;
