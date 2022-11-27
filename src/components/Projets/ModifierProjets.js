@@ -49,7 +49,7 @@ const ModifierProjets = () => {
             color: projetDetails.color,
             date: "Modifier le " + showTime
         };
-
+        //modifier cela
         await setDoc(doc(db, 'membres', ctx.user.uid, "projets", params.projetId), projetData);
         
         navigate('/projets');
