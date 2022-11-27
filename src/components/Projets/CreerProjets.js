@@ -68,6 +68,7 @@ const CreerProjets = () => {
 
         const projetRef = collection(db, "membres", ctx.user.uid, "projets");
 
+        //Reprendre code d'ici pour modifierprojet
         const Projet = await addDoc(projetRef, {
             nom: newProjet.nom,
             description: newProjet.description,

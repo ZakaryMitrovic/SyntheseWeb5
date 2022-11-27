@@ -43,6 +43,7 @@ const ModifierProjets = () => {
     const submitHandler = async(e) => {
         e.preventDefault();
 
+        //Ajouter parti membre et client ici
         const projetData = {
             nom: projetDetails.nom,
             description: projetDetails.description,
