@@ -61,6 +61,9 @@ const Clients = () =>{
         ) : (
         <div>
         <section>
+        <Link className="btn btn-primary btnClient" to="/creerclient">
+            Ajouter un client
+          </Link>
         {client.map(({nom,email, id}) => (
 
 

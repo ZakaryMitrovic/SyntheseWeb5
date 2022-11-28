@@ -16,7 +16,7 @@ const CreerProjets = () => {
         nom: '',
         color: '#000000',
         membres: [],
-        client: {}
+        client: -1
     });
     const [selected, setSelected] = useState([]);
 
@@ -64,21 +64,36 @@ const CreerProjets = () => {
         e.preventDefault();
 
         const Membre = contact.contacts.filter((user)=>selected.includes(user.id));
-        const Client = client.filter((user)=>newProjet.client.includes(user.id));
-
-        const projetRef = collection(db, "membres", ctx.user.uid, "projets");
-
-        //Reprendre code d'ici pour modifierprojet
-        const Projet = await addDoc(projetRef, {
-            nom: newProjet.nom,
-            description: newProjet.description,
-            color: newProjet.color,
-            date: "Créé le "+showTime,
-            membres: Membre,
-            client: Client
-        }, { merge: true });
-        console.log(Projet.id);
-        navigate('/projets');
+        if(newProjet.client !== -1){
+            const Client = client.filter((user)=>newProjet.client.includes(user.id));
+            const projetRef = collection(db, "membres", ctx.user.uid, "projets");
+    
+            //Reprendre code d'ici pour modifierprojet
+            const Projet = await addDoc(projetRef, {
+                nom: newProjet.nom,
+                description: newProjet.description,
+                color: newProjet.color,
+                date: "Créé le "+showTime,
+                membres: Membre,
+                client: Client
+            }, { merge: true });
+            console.log(Membre);
+            navigate('/projets');
+        }else{
+            const projetRef = collection(db, "membres", ctx.user.uid, "projets");
+    
+            //Reprendre code d'ici pour modifierprojet
+            const Projet = await addDoc(projetRef, {
+                nom: newProjet.nom,
+                description: newProjet.description,
+                color: newProjet.color,
+                date: "Créé le "+showTime,
+                membres: Membre,
+                client: []
+            }, { merge: true });
+            console.log(Membre);
+            navigate('/projets');
+        }
     };
     const CheckMembres = async (e) => {
         const { checked, value } = e.currentTarget;
@@ -87,7 +102,7 @@ const CreerProjets = () => {
     };
 
 
-
+    console.log(newProjet.client)
     return (
         <section>
             {isLoading ? <Spinner /> : (
@@ -132,7 +147,8 @@ const CreerProjets = () => {
                         <Link to="/client" className="btn btn-primary">Veuillez créer un client</Link>
                         </div>) : (<div className="selectClient">
                         <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Ajouter un Client</label>
-                        <select onChange={(e)=>updateProjet(e.target.value, 'client')} className="form-select form-select-sm" aria-label=".form-select-sm example">
+                        <select onChange={(e)=>updateProjet(e.target.value, 'client')} className="form-select form-select-sm" aria-label=".form-select-sm example" defaultValue>
+                        <option defaultValue value={-1}>Pas de Client</option>
                             {client.map(({nom, email,id }, index)=>(
                                 <option value={id} key={id}>{nom}, {email}</option>
                             ))}

@@ -148,7 +148,7 @@ const ModifierProjets = () => {
                         <div className="selectClient">
                         <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Ajouter un Client</label>
                         <select onChange={(e)=>updateProjet(e.target.value, 'client')} className="form-select form-select-sm" aria-label=".form-select-sm example">
-                            <option defaultValue>Pas de Client</option>
+                        <option defaultValue>Pas de Client</option>
                             {client.map(({nom, email,id }, index)=>(
                                 <option value={id} key={id}>{nom}, {email}</option>
                             ))}
