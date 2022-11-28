@@ -85,8 +85,6 @@ const ModifierProjets = () => {
             membres: Membre,
             client: Client
         }, { merge: true });
-        //modifier cela
-        //await setDoc(projetRef, Projet);
         
         navigate('/projets');
         

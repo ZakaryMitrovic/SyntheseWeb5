@@ -52,7 +52,13 @@ const Clients = () =>{
   
     
     return(
-        client.length == 0 ? (null) : (
+        client.length == 0 ? (<section>
+          <h1>Vous n'avez pas de client!</h1>
+        <Link className="btn btn-primary btnClient" to="/creerclient">
+            Ajouter un client
+          </Link>
+        </section>
+        ) : (
         <div>
         <section>
         {client.map(({nom,email, id}) => (

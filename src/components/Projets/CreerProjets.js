@@ -3,7 +3,7 @@ import { onSnapshot, collection, doc, addDoc, setDoc, arrayUnion } from 'firebas
 import { db } from '../../config/firebase';
 import { authContexte } from "../../Contexte/authContexte";
 import Spinner from "../Spinner/Spinner";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 const CreerProjets = () => {
     const navigate = useNavigate();
@@ -77,7 +77,7 @@ const CreerProjets = () => {
             membres: Membre,
             client: Client
         }, { merge: true });
-
+        console.log(Projet.id);
         navigate('/projets');
     };
     const CheckMembres = async (e) => {
@@ -127,16 +127,17 @@ const CreerProjets = () => {
                     </div>
 
                         {/* Pour les clients */}
-
-                        <div className="selectClient">
+                        {client.length < 1 ? (<div className="selectClient">
+                        <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Ajouter un Client</label><br/>
+                        <Link to="/client" className="btn btn-primary">Veuillez créer un client</Link>
+                        </div>) : (<div className="selectClient">
                         <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Ajouter un Client</label>
                         <select onChange={(e)=>updateProjet(e.target.value, 'client')} className="form-select form-select-sm" aria-label=".form-select-sm example">
-                            <option defaultValue>Pas de Client</option>
                             {client.map(({nom, email,id }, index)=>(
                                 <option value={id} key={id}>{nom}, {email}</option>
                             ))}
                         </select>
-                    </div>
+                        </div>)}
 
                     </div>
                     <button className="btn btn-primary btnProjet" type="submit">Créer votre projet!</button>
