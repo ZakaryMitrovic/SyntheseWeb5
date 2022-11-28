@@ -8,6 +8,7 @@ import CreerClient from "../Client/CreerClient";
 import DetailsClient from "../Client/DetailsClient";
 import Projets from "../Projets/Projets"
 import ModifierProjets from "../Projets/ModifierProjets"
+import DetailsProjets from "../Projets/DetailsProjets"
 import { authContexte } from "../../Contexte/authContexte";
 import { useContext } from "react";
 import Clients from "../Client/Client";
@@ -32,12 +33,13 @@ const App = () =>{
     {
       path: 'projets',
       element: <Projets />,
-      children: [
-        {
-          path: ':projetId',
-          element: <ModifierProjets/>,
-        },
-      ],
+    },{
+      path: ':projetId',
+      element: <DetailsProjets/>,
+      children:[{
+        path: ':modifier',
+      element: <ModifierProjets/>,
+      }]
     },
     {
       path: 'creerprojet',

@@ -48,7 +48,7 @@ const Projets = () => {
                         <Link to="/creerprojet" className="btn btn-primary">Créer un projet</Link>
                         <div className="list-group">
                             {projet.map(({ nom, description, color, date, id, membres, client}) => (
-                                <Link to={`/projets/${id}`} className="list-group-item list-group-item-action flex-column align-items-start" style={{ border: `2px solid ${color}` }} key={nom + color}>
+                                <Link to={`/${id}`} className="list-group-item list-group-item-action flex-column align-items-start" style={{ border: `2px solid ${color}` }} key={nom + color}>
                                     <div className="d-flex w-100 justify-content-between">
                                         <h5 className="mb-1">{nom}</h5>
                                         <small><i>{date}</i></small>

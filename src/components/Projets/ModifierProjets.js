@@ -14,13 +14,6 @@ const ModifierProjets = () => {
     const [contact, setContact] = useState([]);
     const [client, setClient] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    // const [newProjet, setNewProjet] = useState({
-    //     description: '',
-    //     nom: '',
-    //     color: '#000000',
-    //     membres: [],
-    //     client: {}
-    // });
     const [selected, setSelected] = useState([]);
 
     //Pour recevoir la date actuel (jj/mm/aaaa)
