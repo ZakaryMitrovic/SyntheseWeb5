@@ -85,6 +85,18 @@ const ModifierProjets = () => {
             membres: Membre,
             client: Client
         }, { merge: true });
+        Membre.map((contact)=>{
+            const addedRef = doc(db, "membres", contact.id, "added", params.projetId);
+            console.log(addedRef);
+            const ProjetAdded = setDoc(addedRef, {
+            nom: projetDetails.nom,
+            description: projetDetails.description,
+            color: projetDetails.color,
+            date: "Modifier le "+showTime,
+            membres: Membre,
+            client: Client
+            },{ merge: true });
+        });
         
         navigate('/projets');
         
@@ -136,7 +148,7 @@ const ModifierProjets = () => {
                         <div className="checkboxMembres">
                         <p>Contacts:</p>
                        {contact.contacts.map((membre)=>(
-                        <div className="form-check form-switch" key={membre.nom + membre.email}>
+                        <div className="form-check form-switch" key={membre.id}>
                             <input className="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault" onChange={(e)=>CheckMembres(e)} value={membre.id} checked={selected.some(val => val === membre.id)}/>
                             <label className="form-check-label" htmlFor="flexSwitchCheckDefault">{membre.nom}</label>
                         </div>  

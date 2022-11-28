@@ -77,7 +77,19 @@ const CreerProjets = () => {
                 membres: Membre,
                 client: Client
             }, { merge: true });
-            console.log(Membre);
+            
+            Membre.map((contact)=>{
+                const addedRef = doc(db, "membres", contact.id, "added", Projet.id);
+                console.log(addedRef);
+                const ProjetAdded = setDoc(addedRef, {
+                nom: newProjet.nom,
+                description: newProjet.description,
+                color: newProjet.color,
+                date: "Créé le "+showTime,
+                membres: Membre,
+                client: Client
+                },{ merge: true });
+            });
             navigate('/projets');
         }else{
             const projetRef = collection(db, "membres", ctx.user.uid, "projets");
@@ -91,7 +103,20 @@ const CreerProjets = () => {
                 membres: Membre,
                 client: []
             }, { merge: true });
-            console.log(Membre);
+
+            Membre.map((contact)=>{
+                const addedRef = doc(db, "membres", contact.id, "added", Projet.id);
+                console.log(addedRef);
+                const ProjetAdded = setDoc(addedRef, {
+                nom: newProjet.nom,
+                description: newProjet.description,
+                color: newProjet.color,
+                date: "Créé le "+showTime,
+                membres: Membre,
+                client: []
+                },{ merge: true });
+            });
+            
             navigate('/projets');
         }
     };
@@ -144,7 +169,7 @@ const CreerProjets = () => {
                         {/* Pour les clients */}
                         {client.length < 1 ? (<div className="selectClient">
                         <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Ajouter un Client</label><br/>
-                        <Link to="/client" className="btn btn-primary">Veuillez créer un client</Link>
+                        <Link to="/clients" className="btn btn-primary">Veuillez créer un client</Link>
                         </div>) : (<div className="selectClient">
                         <label className="form-check-label" htmlFor="flexSwitchCheckDefault">Ajouter un Client</label>
                         <select onChange={(e)=>updateProjet(e.target.value, 'client')} className="form-select form-select-sm" aria-label=".form-select-sm example" defaultValue>
