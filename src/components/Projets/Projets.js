@@ -8,6 +8,7 @@ import Spinner from "../Spinner/Spinner";
 const Projets = () => {
     const ctx = useContext(authContexte);
     const [projet, setProjets] = useState([]);
+    const [projetAdded, setProjetsAdded] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
 
@@ -29,6 +30,24 @@ const Projets = () => {
         getProjet();
     }, [projet.length]);
 
+    useEffect(() => {
+        const getProjetAdded = async () => {
+            const unsub = onSnapshot(collection(db, "membres", ctx.user.uid, "added"), (snapshot) => {
+                setProjetsAdded(
+                snapshot.docs.map((doc) => {
+                  return {
+                    ...doc.data(),
+                    id: doc.id,
+                  };
+                })
+              );
+              setIsLoading(false);
+            });
+            return unsub;
+          };
+        getProjetAdded();
+    }, [projetAdded.length]);
+
     return (
         <>
             {isLoading ? (<Spinner />) : (
@@ -39,6 +58,7 @@ const Projets = () => {
                     </section>) : (<>
                         <Link to="/creerprojet" className="btn btn-primary">Créer un projet</Link>
                         <div className="list-group">
+                            <h1>Vos projets</h1>
                             {projet.map(({ nom, description, color, date, id, membres, client}) => (
                                 <Link to={`/projets/${id}`} className="list-group-item list-group-item-action flex-column align-items-start" style={{ border: `2px solid ${color}` }} key={nom + color}>
                                     <div className="d-flex w-100 justify-content-between">
@@ -55,6 +75,26 @@ const Projets = () => {
                                 </Link>
                                 
                             ))}
+                            {projetAdded.length === 0 ? (
+                                <h1>vous n'avez pas de projet auquel vous êtes ajoutés</h1>
+                            ) : (<><h1>Projets où vous avez été rajouté</h1>
+                            {projetAdded.map(({ nom, description, color, date, id, membres, client}) => (
+                                <Link to={`/projets/${id}`} className="list-group-item list-group-item-action flex-column align-items-start" style={{ border: `2px solid ${color}` }} key={nom + color}>
+                                    <div className="d-flex w-100 justify-content-between">
+                                        <h5 className="mb-1">{nom}</h5>
+                                        <small><i>{date}</i></small>
+                                    </div>
+                                    <p className="mb-1">{description}</p>
+                                    {membres.map(({nom, id})=>(
+                                        <small key={id}>{nom}; </small> 
+                                    ))}
+                                    {client.map(({nom, id})=>(
+                                        <small key={id} style={{float: 'right'}}>{nom}</small> 
+                                    ))}
+                                </Link>
+                                
+                            ))}</>)}
+                            
                             <div><Outlet /></div>
                         </div>
                     </>)}

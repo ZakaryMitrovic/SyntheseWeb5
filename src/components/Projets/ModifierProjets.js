@@ -76,21 +76,20 @@ const ModifierProjets = () => {
             color: projetDetails.color,
             date: "Modifier le "+showTime,
             membres: Membre,
-            client: Client
+            client: Client,
+            admin: true,
+            adminId:ctx.user.uid
         }, { merge: true });
+
         Membre.map((contact)=>{
-            const addedRef = doc(db, "membres", contact.id, "added", params.projetId);
-            console.log(addedRef);
+            const addedRef = doc(db, "membres", contact.id, "projets", params.projetId);
             const ProjetAdded = setDoc(addedRef, {
-            nom: projetDetails.nom,
-            description: projetDetails.description,
-            color: projetDetails.color,
-            date: "Modifier le "+showTime,
-            membres: Membre,
-            client: Client
+            nom: newProjet.nom,
+            color: newProjet.color,
+            adminID: ctx.user.uid,
+            admin: false
             },{ merge: true });
         });
-        
         navigate('/projets');
         
     };
@@ -119,7 +118,7 @@ const ModifierProjets = () => {
                     {/* Couleur du Projet */}
                     <div className="input-group mb-3">
                         <span className="input-group-text" id="inputGroup-sizing-default">Couleur du projet</span>
-                        <input type="color" onChange={(e) => updateProjet(e.target.value, 'color')} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={projetDetails.color}/>
+                        <input type="color" onChange={(e) => updateProjet(e.target.value, 'color')} className="ColorForm" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={projetDetails.color}/>
                     </div>
 
                     {/* Titre du Projet */}
@@ -163,7 +162,7 @@ const ModifierProjets = () => {
                     </div>
                 </div>
                 <button className="btn btn-primary btnProjet" type="submit">Confirmer</button>
-                <Link className="btn btn-primary btnProjet" to={`/${params.projetId}`}>Back</Link>
+                <Link className="btn btn-primary btnProjet" to={`/projets/${params.projetId}`}>Back</Link>
             </form>
         </section>
         )

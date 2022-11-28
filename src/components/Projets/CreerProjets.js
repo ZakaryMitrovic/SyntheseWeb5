@@ -68,55 +68,49 @@ const CreerProjets = () => {
             const Client = client.filter((user)=>newProjet.client.includes(user.id));
             const projetRef = collection(db, "membres", ctx.user.uid, "projets");
     
-            //Reprendre code d'ici pour modifierprojet
             const Projet = await addDoc(projetRef, {
                 nom: newProjet.nom,
                 description: newProjet.description,
                 color: newProjet.color,
                 date: "Créé le "+showTime,
                 membres: Membre,
-                client: Client
+                client: Client,
+                admin: true,
+                adminId:ctx.user.uid
             }, { merge: true });
             
             Membre.map((contact)=>{
                 const addedRef = doc(db, "membres", contact.id, "added", Projet.id);
-                console.log(addedRef);
                 const ProjetAdded = setDoc(addedRef, {
                 nom: newProjet.nom,
-                description: newProjet.description,
                 color: newProjet.color,
-                date: "Créé le "+showTime,
-                membres: Membre,
-                client: Client
+                adminID: ctx.user.uid,
+                admin: false
                 },{ merge: true });
             });
             navigate('/projets');
         }else{
             const projetRef = collection(db, "membres", ctx.user.uid, "projets");
-    
-            //Reprendre code d'ici pour modifierprojet
             const Projet = await addDoc(projetRef, {
                 nom: newProjet.nom,
                 description: newProjet.description,
                 color: newProjet.color,
                 date: "Créé le "+showTime,
                 membres: Membre,
-                client: []
+                client: [],
+                admin: true,
+                adminId: ctx.user.uid
             }, { merge: true });
 
             Membre.map((contact)=>{
-                const addedRef = doc(db, "membres", contact.id, "added", Projet.id);
-                console.log(addedRef);
+                const addedRef = doc(db, "membres", contact.id, "projets", Projet.id);
                 const ProjetAdded = setDoc(addedRef, {
                 nom: newProjet.nom,
-                description: newProjet.description,
                 color: newProjet.color,
-                date: "Créé le "+showTime,
-                membres: Membre,
-                client: []
+                adminID: ctx.user.uid,
+                admin: false
                 },{ merge: true });
             });
-            
             navigate('/projets');
         }
     };
@@ -136,7 +130,7 @@ const CreerProjets = () => {
                         {/* Couleur du Projet */}
                         <div className="input-group mb-3">
                             <span className="input-group-text" id="inputGroup-sizing-default">Couleur du projet</span>
-                            <input type="color" onChange={(e) => updateProjet(e.target.value, 'color')} className="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={newProjet.color} />
+                            <input type="color" onChange={(e) => updateProjet(e.target.value, 'color')} className="ColorForm" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={newProjet.color} />
                         </div>
 
                         {/* Titre du Projet */}
