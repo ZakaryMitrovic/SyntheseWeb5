@@ -19,11 +19,13 @@ const { Provider } = authContexte;
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState();
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const unsub = auth.onAuthStateChanged((user) => {
       console.log(user);
       setUser(user);
+      setIsLoading(false);
     });
     return unsub;
   }, []);
@@ -35,9 +37,6 @@ const AuthProvider = ({ children }) => {
 
     const docRef = doc(db, 'membres', creds.user.uid);
     const projRef = doc(db, 'membres', creds.user.uid, "projets", creds.user.uid);
-    //faire une condition si l'utilisateur existe dans la base de donner
-    //si oui, getdoc
-    //sinon, setdoc
 
     const { isNewUser } = getAdditionalUserInfo(creds) // <-- or result of signInWithRedirect();
 
@@ -63,7 +62,7 @@ const AuthProvider = ({ children }) => {
     setUser(creds);
   };
   return (
-    <Provider value={{ user, login, logout }}>
+    <Provider value={{ user, login, logout, isLoading }}>
       {children}
     </Provider>
   );

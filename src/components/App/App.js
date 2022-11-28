@@ -16,8 +16,8 @@ import Clients from "../Client/Client";
 
 const App = () =>{
   const ctx = useContext(authContexte);
-
-  const routes = ctx.user ? [
+  console.log(ctx.isLoading);
+  const routes = !ctx.isLoading && ctx.user ? [
 	{
 	  path: "/",
 	  element: <Layout />,
@@ -34,10 +34,10 @@ const App = () =>{
       path: 'projets',
       element: <Projets />,
     },{
-      path: ':projetId',
+      path: 'projets/:projetId',
       element: <DetailsProjets/>,
       children:[{
-        path: ':modifier',
+      path: ':modifier',
       element: <ModifierProjets/>,
       }]
     },
@@ -91,7 +91,8 @@ const App = () =>{
         {
           path: "*",
           element: <Navigate to="/login" replace />,
-        }];
+        }
+      ];
 
 
   return (

@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext } from 'react';
-import {useParams, useNavigate} from 'react-router-dom';
+import {useParams, useNavigate, Link} from 'react-router-dom';
 import {doc, getDoc, setDoc, arrayUnion, addDoc, onSnapshot, collection} from "firebase/firestore";
 import {ref, update, getDatabase} from "firebase/database";
 import { db } from "../../config/firebase";
@@ -163,6 +163,7 @@ const ModifierProjets = () => {
                     </div>
                 </div>
                 <button className="btn btn-primary btnProjet" type="submit">Confirmer</button>
+                <Link className="btn btn-primary btnProjet" to={`/${params.projetId}`}>Back</Link>
             </form>
         </section>
         )

@@ -4,10 +4,14 @@ const DetailsProjets = () =>{
     const params = useParams();
 return(
     <section>
-
-        <Link className="btn btn-primary" to={`/modifier/${params.projetId}`}>Modifier le Projet</Link>
-        <section>
-        <Outlet/>
+        <div>
+        <Link className="btn btn-primary" to={`/projets/${params.projetId}/modifier`}>Modifier le Projet</Link>
+            <section>
+            <Outlet/>
+            </section>
+        </div>
+        <section style={{marginTop: 50 +'px'}}>
+            lol
         </section>
     </section>
 )
