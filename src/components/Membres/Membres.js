@@ -8,7 +8,8 @@ import {
   setDoc,
   arrayUnion,
   where,
-  query
+  query,
+  getDocs
 } from "firebase/firestore";
 import { db } from "../../config/firebase";
 import { authContexte } from "../../Contexte/authContexte";
@@ -20,7 +21,7 @@ const Membres = () => {
   const ctx = useContext(authContexte);
   const [membres, setMembres] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [search, setSearch] = useState("");
+  // const [search, setSearch] = useState("");
   const [filteredMembres, setFilteredMembres] = useState([]);
 
   useEffect(() => {
@@ -44,6 +45,8 @@ const Membres = () => {
   const AddContact = async (e, membre) => {
     e.preventDefault();
     setIsLoading(true);
+
+    console.log(membre);
     
     const membreRef = doc(db, "membres", ctx.user.uid);
     await setDoc(
@@ -61,17 +64,22 @@ const Membres = () => {
     setIsLoading(false);
   };
 
-  useEffect(() => {
-    // const membreRef = doc(db, "membres", ctx.user.uid);
-    // const membreRechercher = query(membreRef, where("email", "==", search));
-    // setFilteredMembres(membreRechercher);
-    setFilteredMembres(
-      membres.filter(
-        (user) =>
-        user.email.toLowerCase().includes(search.toLowerCase())
-      )
-    );
-  }, [search, membres]);
+  const setSearch = async (email) =>{
+    const membres = collection(db, "membres");
+    const recherche = query(membres, where("email", "==", email));
+    const querySnapshot = await getDocs(recherche);
+    const membreRechercher = await querySnapshot.docs.map((doc)=>{
+      return doc.data();
+    });
+    
+    const MembreTrouver = {
+      nom: membreRechercher[0].nom,
+      email: membreRechercher[0].email,
+      id: membreRechercher[0].id,
+      photoURL: membreRechercher[0].photoURL,
+    };
+    setFilteredMembres([MembreTrouver]);
+  };
 
   return (
     <div>
@@ -85,7 +93,7 @@ const Membres = () => {
       ) : (
         
         <ul className="list-group">
-          {search.length != 0 ? (
+          {filteredMembres.length != 0 ? (
             <>
             {filteredMembres.map((membre, id) => (
               <li className="list-group-item d-flex justify-content-between align-items-center" key={membre.nom + membre.email}>

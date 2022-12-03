@@ -9,6 +9,7 @@ import DetailsClient from "../Client/DetailsClient";
 import Projets from "../Projets/Projets"
 import ModifierProjets from "../Projets/ModifierProjets"
 import DetailsProjets from "../Projets/DetailsProjets"
+import DetailsAjouter from "../Projets/DetailsAjouter"
 import { authContexte } from "../../Contexte/authContexte";
 import { useContext } from "react";
 import Clients from "../Client/Client";
@@ -40,6 +41,9 @@ const App = () =>{
       path: ':modifier',
       element: <ModifierProjets/>,
       }]
+    },{
+      path: 'projetsadded/:projetId',
+      element: <DetailsAjouter/>,
     },
     {
       path: 'creerprojet',

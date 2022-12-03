@@ -6,7 +6,7 @@ import { authContexte } from '../../Contexte/authContexte';
 import Spinner from "../Spinner/Spinner";
 
 
-const DetailsProjets = () =>{
+const DetailsAjouter = () =>{
     const ctx = useContext(authContexte);
     const params = useParams();
     const navigate = useNavigate();
@@ -19,7 +19,7 @@ const DetailsProjets = () =>{
     useEffect(() => {
 
         const getProjet = async() => {
-            const docRef = doc(db, 'membres', ctx.user.uid, "projets", params.projetId);
+            const docRef = doc(db, 'membres', ctx.user.uid, "added", params.projetId);
 
             const monDoc = await getDoc(docRef);
 
@@ -36,7 +36,7 @@ const DetailsProjets = () =>{
 
     // Pour Clavardage
     useEffect(() => {
-        const unsub = onSnapshot(collection(db, 'membres', ctx.user.uid, "projets", params.projetId, "chat"), (snapshot) => {
+        const unsub = onSnapshot(collection(db, 'membres', ctx.user.uid, "added", params.projetId, "chat"), (snapshot) => {
             const unpost = snapshot.docs.map(doc => {
                 return {
                     ...doc.data(),
@@ -51,20 +51,20 @@ const DetailsProjets = () =>{
     const submitHandler = async(e) => {
         e.preventDefault();
 
-        const postRef = collection(db, "membres", ctx.user.uid, "projets", params.projetId, "chat");
-            const Post = await addDoc(postRef, {
-                auteur: ctx.user.displayName,
-                texte: posts
-            }, { merge: true });
-            
-            //pour les membres
-            projetDetails.membres.map((membre)=>{
-                const postsMembreRef = doc(db, "membres", membre.id, "added", params.projetId, "chat", Post.id);
-                const postsAdded =  setDoc(postsMembreRef, {
-                    auteur: ctx.user.displayName,
-                    texte: posts
-                }, { merge: true });
-            });
+        //faire une condition si tes l'admin
+        const postsMembreRef = collection(db, "membres", ctx.user.uid, "added", params.projetId, "chat");
+        const postsAdded = addDoc(postsMembreRef, {
+            auteur: ctx.user.displayName,
+            texte: posts
+        }, { merge: true });
+        
+        console.log(postsAdded.id);
+            const postRef = collection(db, "membres", projetDetails.adminID, "projets", params.projetId, "chat");
+            const Post = addDoc(postRef, {
+            auteur: ctx.user.displayName,
+            texte: posts
+        }, { merge: true });
+        
     };
 
     const updatePost = (valeur) => {
@@ -73,9 +73,6 @@ const DetailsProjets = () =>{
 
 return(
     <section>
-        <div>
-            <Link className="btn btn-primary" to={`/projets/${params.projetId}/modifier`}>Modifier le Projet</Link>
-        </div>
         {isLoading ? (<Spinner />) : (
             <>
                 <section className='ProjetsDetails' style={{ border: `2px solid ${projetDetails.color}` }}>
@@ -84,13 +81,6 @@ return(
                         <small><i>{projetDetails.date}</i></small>
                     </div>
                     <p className="mb-1">{projetDetails.description}</p>
-                    {projetDetails.membres.map(({nom, id})=>(
-                        <small key={id}>{nom}; </small> 
-                    ))}
-                    {projetDetails.client.map(({nom, id})=>(
-                        <small key={id} style={{float: 'right'}}>{nom}</small> 
-                    ))}
-                    <Outlet/>
                 </section>
                 
                 {/* Section pour clavardage */}
@@ -123,4 +113,4 @@ return(
     </section>
 )
 };
-export default DetailsProjets;
+export default DetailsAjouter;

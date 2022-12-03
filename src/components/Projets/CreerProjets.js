@@ -76,7 +76,7 @@ const CreerProjets = () => {
                 membres: Membre,
                 client: Client,
                 admin: true,
-                adminId:ctx.user.uid
+                adminID:ctx.user.uid
             }, { merge: true });
             
             Membre.map((contact)=>{
@@ -99,13 +99,15 @@ const CreerProjets = () => {
                 membres: Membre,
                 client: [],
                 admin: true,
-                adminId: ctx.user.uid
+                adminID: ctx.user.uid
             }, { merge: true });
 
             Membre.map((contact)=>{
-                const addedRef = doc(db, "membres", contact.id, "projets", Projet.id);
+                const addedRef = doc(db, "membres", contact.id, "added", Projet.id);
                 const ProjetAdded = setDoc(addedRef, {
                 nom: newProjet.nom,
+                description: newProjet.description,
+                date: "Créé le "+showTime,
                 color: newProjet.color,
                 adminID: ctx.user.uid,
                 admin: false

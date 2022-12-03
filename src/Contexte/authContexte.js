@@ -23,7 +23,6 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unsub = auth.onAuthStateChanged((user) => {
-      console.log(user);
       setUser(user);
       setIsLoading(false);
     });
@@ -47,7 +46,7 @@ const AuthProvider = ({ children }) => {
             email: creds.user.email,
             photoURL: creds.user.photoURL,
             contacts: [],
-            clients: []
+            id: docRef.id
           });
     } else {
       // Existing user, document created already. 

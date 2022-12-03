@@ -8,7 +8,7 @@ import Spinner from "../Spinner/Spinner";
 const Projets = () => {
     const ctx = useContext(authContexte);
     const [projet, setProjets] = useState([]);
-    const [projetAdded, setProjetsAdded] = useState([]);
+    const [projetAdded, setProjetAdded] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
 
@@ -31,9 +31,9 @@ const Projets = () => {
     }, [projet.length]);
 
     useEffect(() => {
-        const getProjetAdded = async () => {
+        const getProjet = async () => {
             const unsub = onSnapshot(collection(db, "membres", ctx.user.uid, "added"), (snapshot) => {
-                setProjetsAdded(
+                setProjetAdded(
                 snapshot.docs.map((doc) => {
                   return {
                     ...doc.data(),
@@ -45,7 +45,7 @@ const Projets = () => {
             });
             return unsub;
           };
-        getProjetAdded();
+        getProjet();
     }, [projetAdded.length]);
 
     return (
@@ -75,30 +75,25 @@ const Projets = () => {
                                 </Link>
                                 
                             ))}
-                            {projetAdded.length === 0 ? (
+                        </div>
+                    </>)}
+                    
+                    {projetAdded.length === 0 ? (
                                 <h1>vous n'avez pas de projet auquel vous êtes ajoutés</h1>
                             ) : (<><h1>Projets où vous avez été rajouté</h1>
-                            {projetAdded.map(({ nom, description, color, date, id, membres, client}) => (
-                                <Link to={`/projets/${id}`} className="list-group-item list-group-item-action flex-column align-items-start" style={{ border: `2px solid ${color}` }} key={nom + color}>
+
+                            {projetAdded.map(({nom, color, id, date, description}) => (
+                                <Link to={`/projetsadded/${id}`} className="list-group-item list-group-item-action flex-column align-items-start" style={{ border: `2px solid ${color}` }} key={nom + color}>
                                     <div className="d-flex w-100 justify-content-between">
                                         <h5 className="mb-1">{nom}</h5>
                                         <small><i>{date}</i></small>
                                     </div>
                                     <p className="mb-1">{description}</p>
-                                    {membres.map(({nom, id})=>(
-                                        <small key={id}>{nom}; </small> 
-                                    ))}
-                                    {client.map(({nom, id})=>(
-                                        <small key={id} style={{float: 'right'}}>{nom}</small> 
-                                    ))}
                                 </Link>
                                 
-                            ))}</>)}
+                            ))}
                             
-                            <div><Outlet /></div>
-                        </div>
-                    </>)}
-
+                            </>)}
                 </section>
             )}
         </>

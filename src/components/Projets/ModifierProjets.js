@@ -69,7 +69,6 @@ const ModifierProjets = () => {
         const Membre = contact.contacts.filter((user)=>selected.includes(user.id));
         const Client = client.filter((user)=>projetDetails.client.includes(user.id));
         const projetRef = doc(db, "membres", ctx.user.uid, "projets", params.projetId);
-        //Ajouter parti membre et client ici
         const Projet = await setDoc(projetRef, {
             nom: projetDetails.nom,
             description: projetDetails.description,
@@ -78,14 +77,16 @@ const ModifierProjets = () => {
             membres: Membre,
             client: Client,
             admin: true,
-            adminId:ctx.user.uid
+            adminID:ctx.user.uid
         }, { merge: true });
 
         Membre.map((contact)=>{
-            const addedRef = doc(db, "membres", contact.id, "projets", params.projetId);
+            const addedRef = doc(db, "membres", contact.id, "added", params.projetId);
             const ProjetAdded = setDoc(addedRef, {
-            nom: newProjet.nom,
-            color: newProjet.color,
+            nom: projetDetails.nom,
+            description: projetDetails.description,
+            date: "Modifier le "+showTime,
+            color: projetDetails.color,
             adminID: ctx.user.uid,
             admin: false
             },{ merge: true });
