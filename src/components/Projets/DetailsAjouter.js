@@ -1,6 +1,6 @@
 import { useNavigate, Link, useParams, Outlet } from 'react-router-dom';
 import { useEffect, useState, useContext } from 'react';
-import {doc, getDoc, setDoc, arrayUnion, addDoc, onSnapshot, collection} from "firebase/firestore";
+import {doc, getDoc, setDoc, arrayUnion, addDoc, onSnapshot, collection, orderBy, query} from "firebase/firestore";
 import { db } from "../../config/firebase";
 import { authContexte } from '../../Contexte/authContexte';
 import Spinner from "../Spinner/Spinner";
@@ -14,6 +14,9 @@ const DetailsAjouter = () =>{
     const [isLoading, setIsLoading] = useState(true);
     const [posts, setPosts] = useState();
     const [isPosts, setIsPosts] = useState([]);
+
+    const current = new Date();
+    const showTime = `${current.getHours()}:${current.getMinutes() + 1}:${current.getSeconds() } `;
 
     // récuperer le projet selectionné 
     useEffect(() => {
@@ -36,7 +39,8 @@ const DetailsAjouter = () =>{
 
     // Pour Clavardage
     useEffect(() => {
-        const unsub = onSnapshot(collection(db, 'membres', ctx.user.uid, "added", params.projetId, "chat"), (snapshot) => {
+        const queryChat = query(collection(db, 'membres', ctx.user.uid, "added", params.projetId, "chat"), orderBy("temps", "desc"));
+        const unsub = onSnapshot(queryChat, (snapshot) => {
             const unpost = snapshot.docs.map(doc => {
                 return {
                     ...doc.data(),
@@ -55,14 +59,16 @@ const DetailsAjouter = () =>{
         const postsMembreRef = collection(db, "membres", ctx.user.uid, "added", params.projetId, "chat");
         const postsAdded = addDoc(postsMembreRef, {
             auteur: ctx.user.displayName,
-            texte: posts
+            texte: posts,
+            temps: showTime
         }, { merge: true });
         
         console.log(postsAdded.id);
             const postRef = collection(db, "membres", projetDetails.adminID, "projets", params.projetId, "chat");
             const Post = addDoc(postRef, {
             auteur: ctx.user.displayName,
-            texte: posts
+            texte: posts,
+            temps: showTime
         }, { merge: true });
         
     };
@@ -101,7 +107,7 @@ return(
                             <blockquote>
                                <p> {unpost.texte} </p>
                             </blockquote>
-                                <p>{unpost.auteur}</p>
+                                <p>{unpost.auteur} {unpost.temps}</p>
                             </li>
 
                         ))}

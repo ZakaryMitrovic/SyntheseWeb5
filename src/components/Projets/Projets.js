@@ -60,7 +60,7 @@ const Projets = () => {
                         <div className="list-group">
                             <h1>Vos projets</h1>
                             {projet.map(({ nom, description, color, date, id, membres, client}) => (
-                                <Link to={`/projets/${id}`} className="list-group-item list-group-item-action flex-column align-items-start" style={{ border: `2px solid ${color}` }} key={nom + color}>
+                                <Link to={`/projets/${id}`} className="list-group-item list-group-item-action flex-column align-items-start" style={{ border: `2px solid ${color}`, borderRadius: '5px' }} key={nom + color}>
                                     <div className="d-flex w-100 justify-content-between">
                                         <h5 className="mb-1">{nom}</h5>
                                         <small><i>{date}</i></small>
@@ -77,13 +77,14 @@ const Projets = () => {
                             ))}
                         </div>
                     </>)}
-                    
+
+                    <div className="list-group">    
                     {projetAdded.length === 0 ? (
                                 <h1>vous n'avez pas de projet auquel vous êtes ajoutés</h1>
                             ) : (<><h1>Projets où vous avez été rajouté</h1>
 
                             {projetAdded.map(({nom, color, id, date, description}) => (
-                                <Link to={`/projetsadded/${id}`} className="list-group-item list-group-item-action flex-column align-items-start" style={{ border: `2px solid ${color}` }} key={nom + color}>
+                                <Link to={`/projetsadded/${id}`} className="list-group-item list-group-item-action flex-column align-items-start" style={{ border: `2px solid ${color}`, borderRadius: '5px' }} key={nom + color}>
                                     <div className="d-flex w-100 justify-content-between">
                                         <h5 className="mb-1">{nom}</h5>
                                         <small><i>{date}</i></small>
@@ -94,6 +95,7 @@ const Projets = () => {
                             ))}
                             
                             </>)}
+                    </div>
                 </section>
             )}
         </>

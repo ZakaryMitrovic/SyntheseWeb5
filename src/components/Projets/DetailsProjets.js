@@ -15,6 +15,9 @@ const DetailsProjets = () =>{
     const [posts, setPosts] = useState();
     const [isPosts, setIsPosts] = useState([]);
 
+    const current = new Date();
+    const showTime = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`;
+
     // récuperer le projet selectionné 
     useEffect(() => {
 

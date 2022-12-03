@@ -103,7 +103,7 @@ const Membres = () => {
               </li>
             ))}
             </>
-          ):(null)}   
+          ):(<p>Aucun résultat</p>)}   
         </ul>
       )}
       <section>
