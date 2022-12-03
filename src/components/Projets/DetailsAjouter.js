@@ -16,7 +16,10 @@ const DetailsAjouter = () =>{
     const [isPosts, setIsPosts] = useState([]);
 
     const current = new Date();
-    const showTime = `${current.getHours()}:${current.getMinutes() + 1}:${current.getSeconds() } `;
+    const showTime = `${current.getHours()}:${current.getMinutes() + 1}:${current.getSeconds()} `;
+
+    const currentDate = new Date();
+    const showDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
 
     // récuperer le projet selectionné 
     useEffect(() => {
@@ -60,7 +63,8 @@ const DetailsAjouter = () =>{
         const postsAdded = addDoc(postsMembreRef, {
             auteur: ctx.user.displayName,
             texte: posts,
-            temps: showTime
+            temps: showTime,
+            date: showDate
         }, { merge: true });
         
         console.log(postsAdded.id);
@@ -68,7 +72,8 @@ const DetailsAjouter = () =>{
             const Post = addDoc(postRef, {
             auteur: ctx.user.displayName,
             texte: posts,
-            temps: showTime
+            temps: showTime,
+            date: showDate
         }, { merge: true });
         
     };
@@ -107,7 +112,7 @@ return(
                             <blockquote>
                                <p> {unpost.texte} </p>
                             </blockquote>
-                                <p>{unpost.auteur} {unpost.temps}</p>
+                                <p>{unpost.auteur} <small>{unpost.temps} <i>{unpost.date}</i></small> </p>
                             </li>
 
                         ))}

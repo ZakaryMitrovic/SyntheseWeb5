@@ -1,6 +1,6 @@
 import { useNavigate, Link, useParams, Outlet } from 'react-router-dom';
 import { useEffect, useState, useContext } from 'react';
-import {doc, getDoc, setDoc, arrayUnion, addDoc, onSnapshot, collection} from "firebase/firestore";
+import {doc, getDoc, setDoc, arrayUnion, addDoc, onSnapshot, collection, query, orderBy} from "firebase/firestore";
 import { db } from "../../config/firebase";
 import { authContexte } from '../../Contexte/authContexte';
 import Spinner from "../Spinner/Spinner";
@@ -16,7 +16,10 @@ const DetailsProjets = () =>{
     const [isPosts, setIsPosts] = useState([]);
 
     const current = new Date();
-    const showTime = `${current.getDate()}/${current.getMonth() + 1}/${current.getFullYear()}`;
+    const showTime = `${current.getHours()}:${current.getMinutes() + 1}:${current.getSeconds()} `;
+
+    const currentDate = new Date();
+    const showDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
 
     // récuperer le projet selectionné 
     useEffect(() => {
@@ -39,7 +42,8 @@ const DetailsProjets = () =>{
 
     // Pour Clavardage
     useEffect(() => {
-        const unsub = onSnapshot(collection(db, 'membres', ctx.user.uid, "projets", params.projetId, "chat"), (snapshot) => {
+        const queryChat = query(collection(db, 'membres', ctx.user.uid, "projets", params.projetId, "chat"), orderBy("temps", "desc"));
+        const unsub = onSnapshot(queryChat, (snapshot) => {
             const unpost = snapshot.docs.map(doc => {
                 return {
                     ...doc.data(),
@@ -57,7 +61,9 @@ const DetailsProjets = () =>{
         const postRef = collection(db, "membres", ctx.user.uid, "projets", params.projetId, "chat");
             const Post = await addDoc(postRef, {
                 auteur: ctx.user.displayName,
-                texte: posts
+                texte: posts,
+                temps: showTime,
+                date: showDate
             }, { merge: true });
             
             //pour les membres
@@ -65,7 +71,9 @@ const DetailsProjets = () =>{
                 const postsMembreRef = doc(db, "membres", membre.id, "added", params.projetId, "chat", Post.id);
                 const postsAdded =  setDoc(postsMembreRef, {
                     auteur: ctx.user.displayName,
-                    texte: posts
+                    texte: posts,
+                    temps: showTime,
+                    date: showDate
                 }, { merge: true });
             });
     };
@@ -114,7 +122,7 @@ return(
                             <blockquote>
                                <p> {unpost.texte} </p>
                             </blockquote>
-                                <p>{unpost.auteur}</p>
+                                <p>{unpost.auteur} <small>{unpost.temps} <i>{unpost.date}</i></small></p>
                             </li>
 
                         ))}
