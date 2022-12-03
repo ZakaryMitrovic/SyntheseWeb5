@@ -65,13 +65,14 @@ const Membres = () => {
   };
 
   const setSearch = async (email) =>{
-    const membres = collection(db, "membres");
-    const recherche = query(membres, where("email", "==", email));
-    const querySnapshot = await getDocs(recherche);
+    const querySnapshot = await getDocs(query(collection(db, "membres"), where("email", "==", email)));
     const membreRechercher = await querySnapshot.docs.map((doc)=>{
       return doc.data();
     });
-    
+    if(membreRechercher[0].email === ctx.user.email){
+      console.log("this works");
+      //faire une erreur comme quoi qu'il ne peut pas se rajouter lui meme et faire reloader la page?
+    }
     const MembreTrouver = {
       nom: membreRechercher[0].nom,
       email: membreRechercher[0].email,
