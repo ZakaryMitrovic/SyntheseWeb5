@@ -71,15 +71,16 @@ const Membres = () => {
     });
     if(membreRechercher[0].email === ctx.user.email){
       console.log("this works");
-      //faire une erreur comme quoi qu'il ne peut pas se rajouter lui meme et faire reloader la page?
+      alert("vous ne pouvez pas vous ajouter vous même !");
+    }else{
+      const MembreTrouver = {
+        nom: membreRechercher[0].nom,
+        email: membreRechercher[0].email,
+        id: membreRechercher[0].id,
+        photoURL: membreRechercher[0].photoURL,
+      };
+      setFilteredMembres([MembreTrouver]);
     }
-    const MembreTrouver = {
-      nom: membreRechercher[0].nom,
-      email: membreRechercher[0].email,
-      id: membreRechercher[0].id,
-      photoURL: membreRechercher[0].photoURL,
-    };
-    setFilteredMembres([MembreTrouver]);
   };
 
   return (
