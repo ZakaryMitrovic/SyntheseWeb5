@@ -58,6 +58,7 @@ const Membres = () => {
             id: membre.id,
             photoURL: membre.photoURL
           }),
+          
         },
         { merge: true }
     );
