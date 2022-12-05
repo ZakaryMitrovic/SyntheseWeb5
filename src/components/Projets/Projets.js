@@ -60,17 +60,24 @@ const Projets = () => {
                         <div className="list-group">
                             <h1>Vos projets</h1>
                             {projet.map(({ nom, description, color, date, id, membres, client}) => (
-                                <Link to={`/projets/${id}`} className="list-group-item list-group-item-action flex-column align-items-start" style={{ border: `2px solid ${color}`, borderRadius: '5px' }} key={nom + color}>
+                                <Link to={`/projets/${id}`} className="list-group-item list-group-item-action flex-column align-items-start unProjet" style={{border: "2px solid #FCA620", borderRadius: '5px' }} key={nom + color}>
+                                    
                                     <div className="d-flex w-100 justify-content-between">
+
+                                        <div className="titreProjet">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill={color} class="bi bi-file-earmark-fill" viewBox="0 0 16 16">
+                                        <path d="M4 0h5.293A1 1 0 0 1 10 .293L13.707 4a1 1 0 0 1 .293.707V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm5.5 1.5v2a1 1 0 0 0 1 1h2l-3-3z"/>
+                                        </svg>
                                         <h5 className="mb-1">{nom}</h5>
+                                        </div>
                                         <small><i>{date}</i></small>
                                     </div>
-                                    <p className="mb-1">{description}</p>
+                                    <p className="mb-1 descrip"><i>{description}</i></p>
                                     {membres.map(({nom, id})=>(
-                                        <small key={id}>{nom}; </small> 
+                                        <small key={id}>Membre(s): {nom}, </small> 
                                     ))}
                                     {client.map(({nom, id})=>(
-                                        <small key={id} style={{float: 'right'}}>{nom}</small> 
+                                        <small key={id} style={{float: 'right'}}>Client: {nom}</small> 
                                     ))}
                                 </Link>
                                 

@@ -70,7 +70,7 @@ const TableauBord = () => {
     }, [clients.length]);
 
     return (
-        <div>
+        <div className="bodyAccueil" >
             {isLoading ? (<Spinner />) : (
                 <section>
                     {projet.length === 0 ? (
@@ -84,10 +84,9 @@ const TableauBord = () => {
                                 <button className="btnLinkProjets btn btn-primary">Voir les projets</button>
                                 {projet.map(({ nom, description, color, date, id }) => (
                                     <div className="card" style={{ width: 18 + 'em', border: `2px solid ${color}` }} key={id}>
-                                        <img src={"logo512.png"} className="card-img-top" alt="ImgProjet" />
+                                        <img src={"monkey.png"} className="card-img-top" alt="ImgProjet" />
                                         <div className="card-body">
                                             <h5 className="card-title">{nom}</h5>
-                                            <p className="card-text">{description}</p>
                                             <small><i>{date}</i></small>
                                         </div>
                                     </div>
@@ -117,7 +116,7 @@ const TableauBord = () => {
                             <button className="btnLinkProjets btn btn-primary">Voir vos clients</button>
                             {clients.map(({nom, email, id}) => (
                                 <div className="card" style={{ width: 18 + 'em'}} key={id}>
-                                    <img src={"logo512.png"} className="card-img-top" alt="ImgProjet" />
+                                    <img src={"monkeyFlip.png"} className="card-img-top" alt="ImgProjet" />
                                     <div className="card-body">
                                         <h5 className="card-title">{nom}</h5>
                                         <p className="card-text">{email}</p>

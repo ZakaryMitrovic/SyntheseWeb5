@@ -6,19 +6,12 @@
     gap: 50px;
     height: 500px;
     margin-top: 50px;
-    & .BoutonGoogle{
-        cursor: pointer;
-        
+    & .Compagnie{
+        display: flex;
+        align-items: flex-end;
+        & .Logo{
+            height: 100px;
+        }
     }
-    & .BoutonGoogle:hover{
-        cursor: pointer;
-        color: rgb(41, 130, 214);
-    }
-    & .BoutonGoogle:focus{
-        cursor: pointer;
-        color: rgb(41, 130, 214);
-    }
-   
-    
 }
 

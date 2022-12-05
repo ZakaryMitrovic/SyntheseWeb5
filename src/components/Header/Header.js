@@ -42,7 +42,8 @@ const Header = (props) => {
           Clients
         </Link>
       </li>
-      <li className="nav-item btnDeconnexion">
+      
+      <li className="btnDeconnexion">
         <button onClick={e=>btnDeconnexion(e)} style={{display:(isAuth ? "block" : "none")}} className="nav-link">Déconnexion</button>
       </li>
     </ul>

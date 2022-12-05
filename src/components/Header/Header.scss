@@ -2,6 +2,8 @@
 ul{
         margin-left: 5px;
         gap: 5px;
+        border-bottom: 1px solid white;
+        background-color: white;
         & .Utilisateur{
             
             & .imgUtilisateur{
@@ -16,13 +18,14 @@ ul{
                 color: black;
             }& .nav-link:hover{
                 color: black;
-                background-color: white;
+                background-color: #ececec;
             }& .nav-link:focus{
                 color: black;
-                background-color: white;
+                background-color: #ececec;
             }
         }
         & .btnDeconnexion{
-            
+            display: block;
+            margin-left: auto;
         }
 }
