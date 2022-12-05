@@ -1,0 +1,15 @@
+form{
+    & .formDroit{
+        display: grid;
+        grid-template-columns: repeat(2fr);
+        & .checkboxMembres{
+            grid-column: 1;
+        }
+        & .selectClient{
+            grid-column: 2;
+        }
+    }
+    & .btnProjet{
+        margin-top: 20px;
+    }
+}

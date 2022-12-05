@@ -1,23 +1,12 @@
 @import '/src/components/Membres/Membres.scss';
 @import '/src/components/TableauBord/TableauBord.scss';
 @import '/src/components/Projets/Projet.scss';
+@import '/src/components/Projets/CreerProjets.scss';
 @import '/src/components/Projets/DetailsProjets.scss';
 @import '/src/components/Header/Header.scss';
 @import '/src/components/Client/Client.scss';
+@import '/src/components/Login/Login.scss';
 
-//Reorganiser ce css
-form{
-    & .formDroit{
-        display: grid;
-        grid-template-columns: repeat(2fr);
-        & .checkboxMembres{
-            grid-column: 1;
-        }
-        & .selectClient{
-            grid-column: 2;
-        }
-    }
-    & .btnProjet{
-        margin-top: 20px;
-    }
+body{
+    background-color: rgb(236, 236, 236);
 }

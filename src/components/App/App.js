@@ -42,7 +42,7 @@ const App = () =>{
       element: <ModifierProjets/>,
       }]
     },{
-      path: 'projetsadded/:projetId',
+      path: 'projets/collaboration/:projetId',
       element: <DetailsAjouter/>,
     },
     {
@@ -54,11 +54,11 @@ const App = () =>{
       element: <Membres/>
     },
     {
-      path: 'creerprojet',
+      path: 'nouveau-projet',
       element: <CreerProjets/>
     },
     {
-      path: 'creerClient',
+      path: 'clients/nouveau',
       element: <CreerClient/>
     },
     {

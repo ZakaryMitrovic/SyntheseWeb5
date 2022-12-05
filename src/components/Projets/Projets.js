@@ -54,9 +54,9 @@ const Projets = () => {
                 <section className='Projets'>
                     {projet.length === 0 ? (<section className="SectionVide">
                         <h1>Vous avez 0 projet!</h1>
-                        <Link to="/creerprojet" className="btn btn-primary">Créer un projet</Link>
+                        <Link to="/nouveau-projet" className="btn btn-primary">Créer un projet</Link>
                     </section>) : (<>
-                        <Link to="/creerprojet" className="btn btn-primary">Créer un projet</Link>
+                        <Link to="/nouveau-projet" className="btn btn-primary">Créer un projet</Link>
                         <div className="list-group">
                             <h1>Vos projets</h1>
                             {projet.map(({ nom, description, color, date, id, membres, client}) => (
@@ -84,7 +84,7 @@ const Projets = () => {
                             ) : (<><h1>Projets où vous avez été rajouté</h1>
 
                             {projetAdded.map(({nom, color, id, date, description}) => (
-                                <Link to={`/projetsadded/${id}`} className="list-group-item list-group-item-action flex-column align-items-start" style={{ border: `2px solid ${color}`, borderRadius: '5px' }} key={nom + color}>
+                                <Link to={`/projets/collaboration/${id}`} className="list-group-item list-group-item-action flex-column align-items-start" style={{ border: `2px solid ${color}`, borderRadius: '5px' }} key={nom + color}>
                                     <div className="d-flex w-100 justify-content-between">
                                         <h5 className="mb-1">{nom}</h5>
                                         <small><i>{date}</i></small>

@@ -96,16 +96,17 @@ const TableauBord = () => {
                         </section>
                     )}
                     <article>
-                            <Link to='/membres' className="ListMembres">
+                            <Link to='/membres' className="list-group-item-action flex-column align-items-start ListMembres">
                                 <button className="btnLinkProjets btn btn-primary">Voir les nouveaux membres</button>
                                 {membres.map(({nom, email, photoURL, id}) => (
-                                    <div className="card" style={{ width: 18 + 'em'}} key={id}>
-                                        <img src={photoURL} className="card-img-top" alt={nom} referrerPolicy="no-referrer"/>
-                                        <div className="card-body">
-                                            <h5 className="card-title">{nom}</h5>
-                                            <p className="card-text">{email}</p>
-                                        </div>
+                                  <div className="Membre">
+                                    <div className="d-flex w-100 justify-content-between">
+                                        <small><img src={photoURL} alt={nom} style={{height: "50px", borderRadius: "10px"}}referrerPolicy="no-referrer"/></small>
+                                        <h5 >{nom}</h5>
+                                        <small ><i>{email}</i></small>
                                     </div>
+                                  </div>
+                                    
                                 ))}
                             </Link>
                         {clients.length === 0 ? (<Link to='/creerclient' className="ListClients">

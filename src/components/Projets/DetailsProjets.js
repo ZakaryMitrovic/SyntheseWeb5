@@ -83,7 +83,7 @@ const DetailsProjets = () =>{
     };
 
 return(
-    <section>
+    <section className='ProjetDetailSection'>
         <div>
             <Link className="btn btn-primary" to={`/projets/${params.projetId}/modifier`}>Modifier le Projet</Link>
         </div>

@@ -54,14 +54,14 @@ const Clients = () =>{
     return(
         client.length == 0 ? (<section>
           <h1>Vous n'avez pas de client!</h1>
-        <Link className="btn btn-primary btnClient" to="/creerclient">
+        <Link className="btn btn-primary btnClient" to="/clients/nouveau">
             Ajouter un client
           </Link>
         </section>
         ) : (
         <div>
         <section>
-        <Link className="btn btn-primary btnClient" to="/creerclient">
+        <Link className="btn btn-primary btnClient" to="/clients/nouveau">
             Ajouter un client
           </Link>
         {client.map(({nom,email, id}) => (

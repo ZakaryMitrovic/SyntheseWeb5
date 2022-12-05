@@ -17,18 +17,15 @@ const Header = (props) => {
   };
 
   return (
-    <ul className="nav nav-tabs">
+    <ul className={`nav nav-tabs`} >
       {/* Afficher l'utilisateur une fois inscript */}
       {(isAuth ? <li className="nav-item Utilisateur"style={{display:(isAuth ? "flex" : "none")}}>
         <img referrerPolicy="no-referrer" className="imgUtilisateur" src={`${ctx.user.photoURL}`} alt={ctx.user.displayName}/></li> : null)}
-
-      {/* Afficher l'authentification (si nécessaire) */}
-      <li className="nav-item" style={{display:(isAuth ? "none" : "block")}}>
-        <Link className="nav-link" to="/login">
+        <li className="nav-item" style={{display:(isAuth ? "none" : "block")}}>
+        <Link className="nav-link" to="/accueil">
           Authentification
         </Link>
       </li>
-      
       <li className="nav-item" style={{display:(isAuth ? "block" : "none")}}>
         <Link className="nav-link" to="/accueil">
           Accueil
@@ -45,7 +42,7 @@ const Header = (props) => {
           Clients
         </Link>
       </li>
-      <li className="nav-item">
+      <li className="nav-item btnDeconnexion">
         <button onClick={e=>btnDeconnexion(e)} style={{display:(isAuth ? "block" : "none")}} className="nav-link">Déconnexion</button>
       </li>
     </ul>

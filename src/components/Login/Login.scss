@@ -1,0 +1,24 @@
+.Login{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 50px;
+    height: 500px;
+    margin-top: 50px;
+    & .BoutonGoogle{
+        cursor: pointer;
+        
+    }
+    & .BoutonGoogle:hover{
+        cursor: pointer;
+        color: rgb(41, 130, 214);
+    }
+    & .BoutonGoogle:focus{
+        cursor: pointer;
+        color: rgb(41, 130, 214);
+    }
+   
+    
+}
+
