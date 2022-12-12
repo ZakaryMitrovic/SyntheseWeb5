@@ -9,6 +9,7 @@ const CreerProjets = () => {
     const navigate = useNavigate();
     const ctx = useContext(authContexte);
     const [contact, setContact] = useState([]);
+    const [membresId, setMembresId] = useState([""]);
     const [client, setClient] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [newProjet, setNewProjet] = useState({
@@ -64,6 +65,8 @@ const CreerProjets = () => {
         e.preventDefault();
 
         const Membre = contact.contacts.filter((user)=>selected.includes(user.id));
+        const idMembre = Membre.map(membre => membre.id);
+        console.log(idMembre);
         if(newProjet.client !== -1){
             const Client = client.filter((user)=>newProjet.client.includes(user.id));
             const projetRef = collection(db, "membres", ctx.user.uid, "projets");
@@ -76,17 +79,23 @@ const CreerProjets = () => {
                 membres: Membre,
                 client: Client,
                 admin: true,
-                adminID:ctx.user.uid
+                adminID:ctx.user.uid,
+                membreId: idMembre
             }, { merge: true });
             
             Membre.map((contact)=>{
                 const addedRef = doc(db, "membres", contact.id, "added", Projet.id);
-                const ProjetAdded = setDoc(addedRef, {
-                nom: newProjet.nom,
-                color: newProjet.color,
-                adminID: ctx.user.uid,
-                admin: false
-                },{ merge: true });
+                try {
+                    const ProjetAdded = setDoc(addedRef, {
+                    nom: newProjet.nom,
+                    color: newProjet.color,
+                    adminID: ctx.user.uid,
+                    admin: false
+                    },{ merge: true });
+
+                } catch(err) {
+                    console.log(err);
+                }
             });
             navigate('/projets');
         }else{
@@ -99,7 +108,8 @@ const CreerProjets = () => {
                 membres: Membre,
                 client: [],
                 admin: true,
-                adminID: ctx.user.uid
+                adminID: ctx.user.uid,
+                membreId: idMembre
             }, { merge: true });
 
             Membre.map((contact)=>{
