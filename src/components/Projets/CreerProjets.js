@@ -99,6 +99,14 @@ const CreerProjets = () => {
                     console.log(err);
                 }
             });
+            const clientRef = doc(db, "membres", ctx.user.uid, "clients", Client[0].id);
+            const InfoProjetClient = await setDoc(clientRef, {
+                nom: Client[0].nom,
+                email: Client[0].email,
+                Projets: arrayUnion({
+                    id: Projet.id
+                })
+            },{ merge: true })
             navigate('/projets');
         }else{
             const projetRef = collection(db, "membres", ctx.user.uid, "projets");
