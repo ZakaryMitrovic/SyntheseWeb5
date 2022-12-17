@@ -27,7 +27,7 @@ section{
         right: 40%;
         z-index: 500;
         border: 1px solid rgb(236, 236, 236);
-        
+        background-color: white;
     }
     & .card{
         height: 400px;
@@ -36,12 +36,12 @@ section{
 }& .Projets:hover{
     text-decoration: none;
     color: black;
-    border: 1px solid #0d6efd;
+    border: 1px solid #FCA620;
     transition-duration: 0.5s;
     & .btnLinkProjets{
         transition-duration: 0.5s;
-        border: 1px solid white;
-       
+        border: 2px solid #FCA620;
+        background-color: #FCA620;
     }
 }
 
@@ -86,11 +86,11 @@ section{
             background-color: white;
             text-decoration: none;
             color: black;
-            border: 1px solid black;
+            border: 1px solid #FCA620;
             & .btnLinkProjets{
                 transition-duration: 0.5s;
-                border: 1px solid black;
-                background-color:black;
+                border: 1px solid #FCA620;
+                background-color:#FCA620;
                 color:white;
             }
         }
@@ -131,14 +131,18 @@ section{
                 background-color: white;
                 text-decoration: none;
                 color: black;
-                border: 1px solid black;
+                border: 1px solid #FCA620;
                 & .btnLinkProjets{
                     transition-duration: 0.5s;
-                    border: 1px solid black;
-                    background-color:black;
+                    border: 1px solid #FCA620;
+                    background-color:#FCA620;
                     color:white;
                 }
             }
     }
 
+}
+
+.Name{
+    display: flex;
 }

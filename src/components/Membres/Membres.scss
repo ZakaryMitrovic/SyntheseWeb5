@@ -4,8 +4,10 @@ div{
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
+        width: 100%;
         & .btnRecherche{
-            width: 10%;
+            width:10%;
+            margin-left: .5em;
         }
     }
     & .list-group{
@@ -17,6 +19,10 @@ div{
             & .material-symbols-outlined:hover{
                 cursor: pointer;
             }
+    }
+
+    &.Search{
+        display: flex;
     }
 }
 

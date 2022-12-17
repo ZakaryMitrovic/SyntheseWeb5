@@ -54,18 +54,18 @@ const Projets = () => {
                 <section className='Projets'>
                     {projet.length === 0 ? (<section className="SectionVide">
                         <h1>Vous avez 0 projet!</h1>
-                        <Link to="/nouveau-projet" className="btn btn-primary">Créer un projet</Link>
+                        <Link to="/nouveau-projet" className="btn ">Créer un projet</Link>
                     </section>) : (<>
-                        <Link to="/nouveau-projet" className="btn btn-primary">Créer un projet</Link>
                         <div className="list-group">
+                            <Link to="/nouveau-projet" className="btn ">Créer un projet</Link>
                             <h1>Vos projets</h1>
                             {projet.map(({ nom, description, color, date, id, membres, client, dateLivrable}) => (
-                                <Link to={`/projets/${id}`} className="list-group-item list-group-item-action flex-column align-items-start unProjet" style={{border: "2px solid #FCA620", borderRadius: '5px' }} key={nom + color}>
+                                <Link to={`/projets/${id}`} className="list-group-item list-group-item-action flex-column align-items-start unProjet" style={{border: "2px solid black", borderRadius: '5px'}} key={nom + color}>
                                     
                                     <div className="d-flex w-100 justify-content-between">
 
                                         <div className="titreProjet">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill={color} class="bi bi-file-earmark-fill" viewBox="0 0 16 16">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill={color} className="bi bi-file-earmark-fill" viewBox="0 0 16 16">
                                         <path d="M4 0h5.293A1 1 0 0 1 10 .293L13.707 4a1 1 0 0 1 .293.707V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm5.5 1.5v2a1 1 0 0 0 1 1h2l-3-3z"/>
                                         </svg>
                                         <h5 className="mb-1">{nom}</h5>
@@ -88,19 +88,22 @@ const Projets = () => {
 
                     <div className="list-group">    
                     {projetAdded.length === 0 ? (
-                                <h1>vous n'avez pas de projet auquel vous êtes ajoutés</h1>
-                            ) : (<><h1>Projets où vous avez été rajouté</h1>
+                        <h1>vous n'avez pas de projet auquel vous êtes ajoutés</h1>
+                        ) : (<><h1>Projets où vous avez été rajouté</h1>
 
                             {projetAdded.map(({nom, color, id, date, description}) => (
-                                <Link to={`/projets/collaboration/${id}`} className="list-group-item list-group-item-action flex-column align-items-start" style={{ border: `2px solid ${color}`, borderRadius: '5px' }} key={nom + color}>
+                                <Link to={`/projets/collaboration/${id}`} className="list-group-item list-group-item-action flex-column align-items-start" style={{ border: `2px solid black`, borderRadius: '5px' }} key={nom + color}>
                                     <div className="d-flex w-100 justify-content-between">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill={color} className="bi bi-file-earmark-fill" viewBox="0 0 16 16">
+                                        <path d="M4 0h5.293A1 1 0 0 1 10 .293L13.707 4a1 1 0 0 1 .293.707V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm5.5 1.5v2a1 1 0 0 0 1 1h2l-3-3z"/>
+                                        </svg>
                                         <h5 className="mb-1">{nom}</h5>
                                         <small><i>{date}</i></small>
                                     </div>
                                     <p className="mb-1">{description}</p>
                                 </Link>
                                 
-                            ))}
+                                ))}
                             
                             </>)}
                     </div>

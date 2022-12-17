@@ -82,12 +82,17 @@ const TableauBord = () => {
                         ) : (
                         <section>
                             <Link to='/projets' className="Projets">
-                                <button className="btnLinkProjets btn btn-primary">Voir les projets</button>
+                                <button className="btnLinkProjets btn">Voir les projets</button>
                                 {projet.map(({ nom, description, color, date, id }) => (
-                                    <div className="card" style={{ width: 18 + 'em', border: `2px solid ${color}` }} key={id}>
+                                    <div className="card" style={{ width: 18 + 'em', border: `2px solid black` }} key={id}>
                                         <img src={"monkey.png"} className="card-img-top" alt="ImgProjet" />
                                         <div className="card-body">
-                                            <h5 className="card-title">{nom}</h5>
+                                            <div className="Name">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill={color} class="bi bi-file-earmark-fill" viewBox="0 0 16 16">
+                                                <path d="M4 0h5.293A1 1 0 0 1 10 .293L13.707 4a1 1 0 0 1 .293.707V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm5.5 1.5v2a1 1 0 0 0 1 1h2l-3-3z"/>
+                                                </svg>
+                                                <h5 className="card-title">{nom}</h5>
+                                            </div>
                                             <small><i>{date}</i></small>
                                         </div>
                                     </div>
@@ -120,7 +125,7 @@ const TableauBord = () => {
                             <Link to='/clients' className="ListClients">
                             <button className="btnLinkProjets btn btn-primary">Voir vos clients</button>
                             {clients.map(({nom, email, id}) => (
-                                <div className="card" style={{ width: 18 + 'em'}} key={id}>
+                                <div className="card" style={{ width: 18 + 'em', border: `2px solid black`}} key={id}>
                                     <img src={"monkeyFlip.png"} className="card-img-top" alt="ImgProjet" />
                                     <div className="card-body">
                                         <h5 className="card-title">{nom}</h5>

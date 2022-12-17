@@ -111,9 +111,11 @@ const Membres = () => {
     <div>
       <form className="barreRecherche">
         <label htmlFor="inputPassword5" className="form-label"><h1>Rechercher un membre</h1></label>
+        <div className="Search">
         <input type="text" className="form-control" placeholder="example@courriel.ca" onChange={(e)=>setCourriel(e.target.value)}/>
-        <small> <i>Veuillez inscrire le courriel du membre que vous souhaitez rechercher</i> </small>
         <button  className="btn btn-primary btnRecherche" onClick={(e)=>setSearch(e, courriel)}>Rechercher</button>
+        </div>
+        <small> <i>Veuillez inscrire le courriel du membre que vous souhaitez rechercher</i> </small>
       </form>
       {isLoading ? (
         <Spinner />
