@@ -1,6 +1,12 @@
 div{
     & .barreRecherche{
         margin-top: 50px;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        & .btnRecherche{
+            width: 10%;
+        }
     }
     & .list-group{
         margin-top:25px;

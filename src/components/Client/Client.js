@@ -32,11 +32,6 @@ const Clients = () =>{
           getClient();
     }, [client.length]);
    
-    
-    
-      
-    
-
   const deleteHandler = async (index) => {
     const clientRef = doc(db, "membres", ctx.user.uid, "clients", index);
     

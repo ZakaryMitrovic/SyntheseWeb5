@@ -13,15 +13,17 @@ import {
 } from "firebase/firestore";
 import { db } from "../../config/firebase";
 import { authContexte } from "../../Contexte/authContexte";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import Spinner from "../Spinner/Spinner";
 
 
 const Membres = () => {
   const ctx = useContext(authContexte);
+  const navigate = useNavigate();
   const [membres, setMembres] = useState([]);
+  const [contacts, setContacts] = useState([]);
+  const [courriel, setCourriel] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  // const [search, setSearch] = useState("");
   const [filteredMembres, setFilteredMembres] = useState([]);
 
   useEffect(() => {
@@ -41,6 +43,25 @@ const Membres = () => {
     };
     getMembre();
   }, [membres]);
+
+  useEffect(() => {
+
+    const getContacts = async() => {
+        const docRef = doc(db, 'membres', ctx.user.uid);
+
+        const monDoc = await getDoc(docRef);
+
+        const monProjet = monDoc.data();
+        
+        setContacts({
+            ...monProjet,
+            id: monDoc.id
+        });
+        setIsLoading(false);
+    };
+    getContacts();
+    console.log(contacts.contacts);
+}, [ctx.user.uid]);
 
   const AddContact = async (e, membre) => {
     e.preventDefault();
@@ -63,9 +84,11 @@ const Membres = () => {
         { merge: true }
     );
     setIsLoading(false);
+    navigate('/accueil');
   };
 
-  const setSearch = async (email) =>{
+  const setSearch = async (e, email) =>{
+    e.preventDefault();
     const querySnapshot = await getDocs(query(collection(db, "membres"), where("email", "==", email)));
     const membreRechercher = await querySnapshot.docs.map((doc)=>{
       return doc.data();
@@ -88,8 +111,9 @@ const Membres = () => {
     <div>
       <form className="barreRecherche">
         <label htmlFor="inputPassword5" className="form-label"><h1>Rechercher un membre</h1></label>
-        <input type="text" className="form-control" placeholder="example@courriel.ca" onChange={(e)=>setSearch(e.target.value)}/>
+        <input type="text" className="form-control" placeholder="example@courriel.ca" onChange={(e)=>setCourriel(e.target.value)}/>
         <small> <i>Veuillez inscrire le courriel du membre que vous souhaitez rechercher</i> </small>
+        <button  className="btn btn-primary btnRecherche" onClick={(e)=>setSearch(e, courriel)}>Rechercher</button>
       </form>
       {isLoading ? (
         <Spinner />
@@ -109,9 +133,6 @@ const Membres = () => {
           ):(<p>Aucun résultat</p>)}   
         </ul>
       )}
-      <section>
-        <Outlet />
-      </section>
     </div>
   );
 };

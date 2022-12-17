@@ -59,7 +59,7 @@ const Projets = () => {
                         <Link to="/nouveau-projet" className="btn btn-primary">Créer un projet</Link>
                         <div className="list-group">
                             <h1>Vos projets</h1>
-                            {projet.map(({ nom, description, color, date, id, membres, client}) => (
+                            {projet.map(({ nom, description, color, date, id, membres, client, dateLivrable}) => (
                                 <Link to={`/projets/${id}`} className="list-group-item list-group-item-action flex-column align-items-start unProjet" style={{border: "2px solid #FCA620", borderRadius: '5px' }} key={nom + color}>
                                     
                                     <div className="d-flex w-100 justify-content-between">
@@ -72,6 +72,7 @@ const Projets = () => {
                                         </div>
                                         <small><i>{date}</i></small>
                                     </div>
+                                    <small>Due: <i>{dateLivrable}</i></small>
                                     <p className="mb-1 descrip"><i>{description}</i></p>
                                     {membres.map(({nom, id})=>(
                                         <small key={id}>Membre(s): {nom}, </small> 

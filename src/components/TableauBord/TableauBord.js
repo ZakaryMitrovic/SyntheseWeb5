@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import { onSnapshot, collection, addDoc, doc } from 'firebase/firestore';
+import { onSnapshot, collection, addDoc, doc, getDoc } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { authContexte } from "../../Contexte/authContexte";
 import { Link } from "react-router-dom";
@@ -9,7 +9,7 @@ const TableauBord = () => {
     const ctx = useContext(authContexte);
     const [projet, setProjets] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const [membres, setMembres] = useState([]);
+    const [contacts, setContacts] = useState([]);
     const [clients, setClients] = useState([]);
 
     /*POUR LES PROJETS */
@@ -31,25 +31,26 @@ const TableauBord = () => {
           getProjet();
     }, [projet.length]);
     
-    /*POUR LES MEMBRES */
+    /*POUR LES CONTACTS */
     useEffect(() => {
-        const getMembre = async () => {
-          const unsub = onSnapshot(collection(db, "membres"), (snapshot) => {
-            setMembres(
-              snapshot.docs.map((doc) => {
-                return {
-                  ...doc.data(),
-                  id: doc.id,
-                };
-              })
-            );
-            setIsLoading(false);
-          });
-          return unsub;
-        };
-        getMembre();
-      }, [membres]);
 
+      const getContacts = async() => {
+          const docRef = doc(db, 'membres', ctx.user.uid);
+  
+          const monDoc = await getDoc(docRef);
+  
+          const monProjet = monDoc.data();
+          
+          setContacts({
+              ...monProjet,
+              id: monDoc.id
+          });
+          setIsLoading(false);
+      };
+      getContacts();
+      console.log(contacts.contacts);
+  }, [ctx.user.uid]);
+  
       /*POUR LES CLIENTS */
       useEffect(() => {
         const getClient = async () => {
@@ -96,8 +97,10 @@ const TableauBord = () => {
                     )}
                     <article>
                             <Link to='/membres' className="list-group-item-action flex-column align-items-start ListMembres">
-                                <button className="btnLinkProjets btn btn-primary">Voir les nouveaux membres</button>
-                                {membres.map(({nom, email, photoURL, id}) => (
+                                <button className="btnLinkProjets btn btn-primary">Vos contacts</button>
+                                {contacts.length != 0 ? (<>
+                                {contacts.contacts.length != 0 ? (<>
+                                {contacts.contacts.map(({nom, email, photoURL, id}) => (
                                   <div className="Membre">
                                     <div className="d-flex w-100 justify-content-between">
                                         <small><img src={photoURL} alt={nom} style={{height: "50px", borderRadius: "10px"}}referrerPolicy="no-referrer"/></small>
@@ -107,6 +110,8 @@ const TableauBord = () => {
                                   </div>
                                     
                                 ))}
+                                </>):(<p className="pCreerProjetAccueil">Vous avez 0 contacts!</p>)}
+                                </>): (<p className="pCreerProjetAccueil">Vous avez 0 contacts!</p>)}
                             </Link>
                         {clients.length === 0 ? (<Link to='/creerclient' className="ListClients">
                         <button className="btnLinkProjets btn btn-primary">Ajouter votre premier client!</button>

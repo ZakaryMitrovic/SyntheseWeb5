@@ -1,9 +1,10 @@
 import { useNavigate, Link, useParams, Outlet } from 'react-router-dom';
 import { useEffect, useState, useContext } from 'react';
-import {doc, getDoc, setDoc, arrayUnion, addDoc, onSnapshot, collection, query, orderBy} from "firebase/firestore";
+import {doc, getDoc, setDoc, arrayUnion, addDoc, onSnapshot, collection, query, orderBy, Timestamp} from "firebase/firestore";
 import { db } from "../../config/firebase";
 import { authContexte } from '../../Contexte/authContexte';
 import Spinner from "../Spinner/Spinner";
+import moment from "moment";
 
 
 const DetailsProjets = () =>{
@@ -16,10 +17,6 @@ const DetailsProjets = () =>{
     const [isPosts, setIsPosts] = useState([]);
 
     const current = new Date();
-    const showTime = `${current.getHours()}:${current.getMinutes() + 1}:${current.getSeconds()} `;
-
-    const currentDate = new Date();
-    const showDate = `${currentDate.getDate()}/${currentDate.getMonth() + 1}/${currentDate.getFullYear()}`;
 
     // récuperer le projet selectionné 
     useEffect(() => {
@@ -62,8 +59,7 @@ const DetailsProjets = () =>{
             const Post = await addDoc(postRef, {
                 auteur: ctx.user.displayName,
                 texte: posts,
-                temps: showTime,
-                date: showDate
+                temps: Timestamp.fromDate(current)
             }, { merge: true });
             
             //pour les membres
@@ -72,8 +68,7 @@ const DetailsProjets = () =>{
                 const postsAdded =  setDoc(postsMembreRef, {
                     auteur: ctx.user.displayName,
                     texte: posts,
-                    temps: showTime,
-                    date: showDate
+                    temps: Timestamp.fromDate(current)
                 }, { merge: true });
             });
     };
@@ -122,7 +117,7 @@ return(
                             <blockquote>
                                <p> {unpost.texte} </p>
                             </blockquote>
-                                <p>{unpost.auteur} <small>{unpost.temps} <i>{unpost.date}</i></small></p>
+                                <p>{unpost.auteur} <small><i>{moment(unpost.temps.toDate()).format('dddd, h:mm a')} </i></small></p>
                             </li>
 
                         ))}

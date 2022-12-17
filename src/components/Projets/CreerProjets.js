@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import { onSnapshot, collection, doc, addDoc, setDoc, arrayUnion } from 'firebase/firestore';
+import { onSnapshot, collection, doc, addDoc, setDoc, arrayUnion, Timestamp } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { authContexte } from "../../Contexte/authContexte";
 import Spinner from "../Spinner/Spinner";
@@ -17,7 +17,8 @@ const CreerProjets = () => {
         nom: '',
         color: '#000000',
         membres: [],
-        client: -1
+        client: -1,
+        dateLivrable: ''
     });
     const [selected, setSelected] = useState([]);
 
@@ -79,6 +80,7 @@ const CreerProjets = () => {
                 membres: Membre,
                 client: Client,
                 admin: true,
+                dateLivrable: newProjet.dateLivrable,
                 adminID:ctx.user.uid,
                 membreId: idMembre
             }, { merge: true });
@@ -108,6 +110,7 @@ const CreerProjets = () => {
                 membres: Membre,
                 client: [],
                 admin: true,
+                dateLivrable: newProjet.dateLivrable,
                 adminID: ctx.user.uid,
                 membreId: idMembre
             }, { merge: true });
@@ -155,6 +158,11 @@ const CreerProjets = () => {
                         <div className="mb-3">
                             <label htmlFor="exampleFormControlTextarea1" className="form-label">Description du Projet</label>
                             <textarea onChange={(e) => updateProjet(e.target.value, 'description')} className="form-control" id="exampleFormControlTextarea1" rows="3" value={newProjet.description}></textarea>
+                        </div>
+                        {/* Date livrable*/}
+                        <div className="input-group mb-3">
+                            <span className="input-group-text" id="inputGroup-sizing-default">Date livrable du projet</span>
+                            <input type="date" onChange={(e) => updateProjet(e.target.value, 'dateLivrable')} className="ColorForm" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={newProjet.dateLivrable} />
                         </div>
                     </div>
 
