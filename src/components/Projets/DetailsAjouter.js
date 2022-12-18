@@ -6,6 +6,7 @@ import { authContexte } from '../../Contexte/authContexte';
 import Spinner from "../Spinner/Spinner";
 import moment from "moment";
 
+
 const DetailsAjouter = () =>{
     const ctx = useContext(authContexte);
     const params = useParams();
@@ -80,6 +81,7 @@ return(
     <section>
         {isLoading ? (<Spinner />) : (
             <>
+            <section className='ProjetDetailSection'>
                 <section className='ProjetsDetails' style={{ border: `2px solid ${projetDetails.color}` }}>
                     <div className="d-flex w-100 justify-content-between">
                         <h5 className="mb-1">{projetDetails.nom}</h5>
@@ -112,6 +114,7 @@ return(
                         ))}
 
                     </ul>
+                </section>
                 </section>
             </>
             )}
