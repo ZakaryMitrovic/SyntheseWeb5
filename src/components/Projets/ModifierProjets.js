@@ -77,6 +77,7 @@ const ModifierProjets = () => {
             membres: Membre,
             client: Client,
             admin: true,
+            dateLivrable: projetDetails.dateLivrable, //******************* */
             adminID:ctx.user.uid
         }, { merge: true });
 
@@ -132,6 +133,12 @@ const ModifierProjets = () => {
                     <div className="mb-3">
                         <label htmlFor="exampleFormControlTextarea1" className="form-label">Description du Projet</label>
                         <textarea onChange={(e) => updateProjet(e.target.value, 'description')} className="form-control" id="exampleFormControlTextarea1" rows="3" value={projetDetails.description}></textarea>
+                    </div>
+
+                    {/* Date livrable*/}
+                    <div className="input-group mb-3">
+                            <span className="input-group-text" id="inputGroup-sizing-default">Date livrable du projet</span>
+                            <input type="date" onChange={(e) => updateProjet(e.target.value, 'dateLivrable')} className="ColorForm" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" value={projetDetails.dateLivrable} />
                     </div>
                     
                     <div className="formDroit">
