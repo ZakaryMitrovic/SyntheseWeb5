@@ -1,9 +1,23 @@
 section{
+ 
     & h1{
         text-align: center;
         margin: 50px auto;
     }
     & .btnClient{
         margin: 50px 0;
+    }
+    & .ParentCard{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2em;
+    } 
+    & .card{
+        border: 2px solid black ;
+        transition-duration: 0.5;
+    }
+    & .card:hover{
+        border: 2px solid #FCA620 ;
+        transition-duration: 0.5;
     }
 }

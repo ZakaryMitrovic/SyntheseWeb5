@@ -59,7 +59,7 @@ const CreerClient = () =>{
         
                 
                 </div>
-                <button disabled={isDisabled} className="btn btn-primary btnProjet" type="submit">Ajouter Client</button>
+                <button disabled={isDisabled} className="btn  btnProjet" type="submit">Ajouter Client</button>
             </form>
         </section>
     );

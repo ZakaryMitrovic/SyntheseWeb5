@@ -14,6 +14,22 @@
     & .descrip{
         width: 85%;
     }
+    & .unProjet{
+        transition-duration: 0.5;
+        border: 2px solid black;
+    }
+    & .unProjet:hover{
+        transition-duration: 0.5;
+        border: 2px solid #FCA620;
+    }
+    & .unProjetAdded{
+        transition-duration: 0.5;
+        border: 2px solid black;
+    }
+    & .unProjetAdded:hover{
+        transition-duration: 0.5;
+        border: 2px solid #FCA620;
+    }
 }
 
 

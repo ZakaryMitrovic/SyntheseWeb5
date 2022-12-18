@@ -7,9 +7,16 @@
        }
     }
     & .ProjetsDetails{
+        transition-duration: 0.5;
         margin-top: 50px;
         border-radius: 10px;
         padding: 10px;
+        border: 2px solid black;
+    }
+    & .ProjetsDetails:hover{
+        
+        transition-duration: 0.5;
+        border: 2px solid #FCA620;
     }
     & section{
         & ul{

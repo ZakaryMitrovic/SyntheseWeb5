@@ -59,21 +59,28 @@ const Clients = () =>{
         <Link className="btn btn-primary btnClient" to="/clients/nouveau">
             Ajouter un client
           </Link>
-        {client.map(({nom,email, id}) => (
+          <div className="ParentCard">
+
+          {client.map(({nom,email, id}) => (
 
 
             <div  className="card"  style={{width:18+'em'}} key={id}>
-            <img src={"logo192.png" } className="card-img-top" alt="..."/>
-            <div className="card-body">
-            <h5 className="card-title"> {nom} </h5>
-            <p className="card-text"> {email} </p>
-            
-            <Link to={`/clients/${id}`}><button className="btn btn-primary" >Modifier client</button></Link>
-            <button className="btn btn-primary" onClick={()=>deleteHandler(id)}  >Supprimer</button>
-            </div>
+              <img src={"monkeyFlip.png" } className="card-img-top" alt="..."/>
+              <div className="card-body">
+              <h5 className="card-title"> {nom} </h5>
+              <p className="card-text"> {email} </p>
+
+      
+
+              <Link to={`/clients/${id}`}><button className="btn btn-primary" >Modifier client</button></Link>
+              <button className="btn btn-primary" onClick={()=>deleteHandler(id)}  >Supprimer</button>
+              </div>
             </div>
                    
-        ))}
+          ))}
+
+          </div>
+      
        
         </section>
         <div><Outlet/></div>
