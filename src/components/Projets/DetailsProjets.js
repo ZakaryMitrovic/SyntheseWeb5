@@ -52,8 +52,12 @@ const DetailsProjets = () => {
         return unsub;
     }, [posts]);
 
+    
+
+   
+
     const submitHandler = async (e) => {
-        e.preventDefault();
+         e.preventDefault();
 
         const postRef = collection(db, "membres", ctx.user.uid, "projets", params.projetId, "chat");
         const Post = await addDoc(postRef, {
@@ -72,6 +76,7 @@ const DetailsProjets = () => {
             }, { merge: true });
         });
     };
+
 
     const updatePost = (valeur) => {
         setPosts(valeur);
@@ -112,7 +117,8 @@ const DetailsProjets = () => {
                         <form onSubmit={submitHandler} name="monForm" noValidate>
                             <div className="form-group">
                                 <label htmlFor="text">Votre message</label>
-                                <textarea className="form-control" id="text" onChange={e => updatePost(e.target.value)} required></textarea>
+                                <textarea className="form-control" id="text" onSubmit={submitHandler} onChange={e => updatePost(e.target.value)} required></textarea>
+                          
                             </div>
 
                             <input onClick={submitHandler} type="submit" value="Ajouter" className='btn btn-primary' />
@@ -122,9 +128,9 @@ const DetailsProjets = () => {
 
                                 <li className="post" key={unpost.id}>
                                     <blockquote>
-                                        <p> {unpost.texte} </p>
+                                        <p> { unpost.texte} </p>
                                     </blockquote>
-                                    <p>{unpost.auteur} <small><i>{moment(unpost.temps.toDate()).format('dddd, h:mm a')} </i></small></p>
+                                    <p>{ unpost.auteur} <small><i>{moment(unpost.temps.toDate()).format('dddd, h:mm a')} </i></small></p>
                                 </li>
 
                             ))}
