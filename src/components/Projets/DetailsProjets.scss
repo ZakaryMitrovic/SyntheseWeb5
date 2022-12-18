@@ -11,15 +11,10 @@
         margin-top: 50px;
         border-radius: 10px;
         padding: 10px;
-        border: 2px solid black;
+        border: 2px solid #FCA620;
         // & .titreProjetDetail{
 
         // }
-    }
-    & .ProjetsDetails:hover{
-        
-        transition-duration: 0.5;
-        border: 2px solid #FCA620;
     }
     & section{
         & ul{
