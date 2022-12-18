@@ -83,12 +83,12 @@ const TableauBord = () => {
                         <section>
                             <Link to='/projets' className="Projets">
                                 <button className="btnLinkProjets btn">Vos projets</button>
-                                {projet.map(({ nom, description, color, date, id,dateLivrable }) => (
+                                {projet.map(({ nom, description, color, date, id, dateLivrable }) => (
                                     <div className="card" style={{ width: 18 + 'em', border: `2px solid black` }} key={id}>
                                         <img src={"monkey.png"} className="card-img-top" alt="ImgProjet" />
                                         <div className="card-body">
                                             <div className="Name">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill={color} class="bi bi-file-earmark-fill" viewBox="0 0 16 16">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill={color} className="bi bi-file-earmark-fill" viewBox="0 0 16 16">
                                                 <path d="M4 0h5.293A1 1 0 0 1 10 .293L13.707 4a1 1 0 0 1 .293.707V14a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2zm5.5 1.5v2a1 1 0 0 0 1 1h2l-3-3z"/>
                                                 </svg>
                                                 <h5 className="card-title">{nom}</h5>
@@ -109,7 +109,7 @@ const TableauBord = () => {
                                 {contacts.length != 0 ? (<>
                                 {contacts.contacts.length != 0 ? (<>
                                 {contacts.contacts.map(({nom, email, photoURL, id}) => (
-                                  <div className="Membre">
+                                  <div className="Membre" key={id}>
                                     <div className="d-flex w-100 justify-content-between">
                                         <small><img src={photoURL} alt={nom} style={{height: "50px", borderRadius: "10px"}}referrerPolicy="no-referrer"/></small>
                                         <h5 >{nom}</h5>
