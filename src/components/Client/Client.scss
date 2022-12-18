@@ -16,10 +16,6 @@ section{
         border: 2px solid black ;
         transition-duration: 0.5;
     }
-    & .card:hover{
-        border: 2px solid #FCA620 ;
-        transition-duration: 0.5;
-    }
     & .btnAction{
         display: flex;
         flex-wrap: wrap;
