@@ -82,7 +82,7 @@ const TableauBord = () => {
                         ) : (
                         <section>
                             <Link to='/projets' className="Projets">
-                                <button className="btnLinkProjets btn">Voir les projets</button>
+                                <button className="btnLinkProjets btn">Vos projets</button>
                                 {projet.map(({ nom, description, color, date, id,dateLivrable }) => (
                                     <div className="card" style={{ width: 18 + 'em', border: `2px solid black` }} key={id}>
                                         <img src={"monkey.png"} className="card-img-top" alt="ImgProjet" />
@@ -126,7 +126,7 @@ const TableauBord = () => {
                         <p className="pCreerProjetAccueil">Vous avez 0 client!</p>    
                         </Link>) : (
                             <Link to='/clients' className="ListClients">
-                            <button className="btnLinkProjets btn btn-primary">Voir vos clients</button>
+                            <button className="btnLinkProjets btn btn-primary">Vos clients</button>
                             {clients.map(({nom, email, id}) => (
                                 <div className="card" style={{ width: 18 + 'em', border: `2px solid black`}} key={id}>
                                     <img src={"monkeyFlip.png"} className="card-img-top" alt="ImgProjet" />
