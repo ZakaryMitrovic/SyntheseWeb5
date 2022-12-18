@@ -71,7 +71,11 @@ const Clients = () =>{
               <p className="card-text"> {email} </p>
 
       
-
+           
+             
+              
+              </div>
+              <div className="btnAction">
               <Link to={`/clients/${id}`}><button className="btn btn-primary" >Modifier client</button></Link>
               <button className="btn btn-primary" onClick={()=>deleteHandler(id)}  >Supprimer</button>
               </div>

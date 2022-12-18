@@ -20,4 +20,10 @@ section{
         border: 2px solid #FCA620 ;
         transition-duration: 0.5;
     }
+    & .btnAction{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1em;
+        padding: 10px;
+    }
 }
