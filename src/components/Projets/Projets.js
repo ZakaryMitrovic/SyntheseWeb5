@@ -73,8 +73,9 @@ const Projets = () => {
                                     </div>
                                     <small>Due: <i>{dateLivrable}</i></small>
                                     <p className="mb-1 descrip"><i>{description}</i></p>
+                                    <small>Membre(s): </small>
                                     {membres.map(({nom, id})=>(
-                                        <small key={id}>Membre(s): {nom}, </small> 
+                                        <small key={id}>{nom}, </small> 
                                     ))}
                                     {client.map(({nom, id})=>(
                                         <small key={id} style={{float: 'right'}}>Client: {nom}</small> 
