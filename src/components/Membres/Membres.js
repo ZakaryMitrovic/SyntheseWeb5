@@ -25,6 +25,7 @@ const Membres = () => {
   const [courriel, setCourriel] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [filteredMembres, setFilteredMembres] = useState([]);
+  const [istrue, setIsTrue] = useState(false);
 
   useEffect(() => {
     const getMembre = async () => {
@@ -65,6 +66,7 @@ const Membres = () => {
 
   const AddContact = async (e, membre) => {
     e.preventDefault();
+    setIsTrue(true);
     setIsLoading(true);
 
     console.log(membre);
@@ -128,7 +130,7 @@ const Membres = () => {
               <li className="list-group-item d-flex justify-content-between align-items-center" key={membre.nom + membre.email}>
                 <img className="imgMembresList" src={`${membre.photoURL}`} alt="photoMembre" referrerPolicy="no-referrer"/>
                 {membre.nom} <p>{membre.email}</p>
-                <span className="material-symbols-outlined" onClick={(e) => AddContact(e, membre)}>add</span>
+                <span className={"material-symbols-outlined"} onClick={(e) => AddContact(e, membre)}>{istrue? "check":"add"}</span>
               </li>
             ))}
             </>
