@@ -19,17 +19,27 @@
     & section{
         & ul{
             margin-top: 10px;
-            list-style-type: circle;
-            // position: relative;
+            list-style-type: none;
+            position: relative;
             // padding-left: 15px;
+            background-color: #ececec;
+            
+            & li{
+                background-color: white;
+                margin-bottom:10px;
+                border-radius: 5px;
+                border: 1px solid #FCA620;
+                padding-left: 5px;
+                & .messagePost::before {
+                    content: ">";
+                    position: absolute;
+                    left: 20px;
+                    font-size: 15px;
+                    font-weight:bold;
+                    color: #FCA620;
+                }
+            }
         }
-        // & li::before{
-        //     content: "\25BA \0020";
-        //     font-size: 4em;
-        //     position: absolute;
-        //     top: 5px;
-        //     left: -10px;
-        // }
         & form{
             display: flex;
             flex-wrap: wrap;

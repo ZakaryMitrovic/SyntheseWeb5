@@ -100,8 +100,8 @@ const DetailsProjets = () => {
                             </div>
                         </div>
                         <p className="mb-1">{projetDetails.description}</p>
-                        <small>Due: <i>{projetDetails.dateLivrable}</i></small><br/>
-                        <small>membres: </small>
+                        <small>Dû le: <i>{projetDetails.dateLivrable}</i></small><br/>
+                        <small>Membre(s): </small>
                         {projetDetails.membres.map(({ nom, id }) => (
                             <small key={id}>{nom}; </small>
                         ))}
@@ -126,10 +126,10 @@ const DetailsProjets = () => {
                             {isPosts?.map((unpost) => (
 
                                 <li className="post" key={unpost.id}>
-                                    <blockquote>
-                                        <p> { unpost.texte} </p>
-                                    </blockquote>
-                                    <p>{ unpost.auteur} <small><i>{moment(unpost.temps.toDate()).format('dddd, h:mm a')} </i></small></p>
+                                    <div className="messagePost">
+                                        <p> {unpost.texte} </p>
+                                    </div>
+                                    <p>{unpost.auteur} <small><i>{moment(unpost.temps.toDate()).format('dddd, h:mm a')} </i></small></p>
                                 </li>
 
                             ))}

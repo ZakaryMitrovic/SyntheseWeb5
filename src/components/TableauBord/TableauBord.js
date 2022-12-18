@@ -121,7 +121,7 @@ const TableauBord = () => {
                                 </>):(<p className="pCreerProjetAccueil">Vous avez 0 contacts!</p>)}
                                 </>): (<p className="pCreerProjetAccueil">Vous avez 0 contacts!</p>)}
                             </Link>
-                        {clients.length === 0 ? (<Link to='/creerclient' className="ListClients">
+                        {clients.length === 0 ? (<Link to='/clients/nouveau' className="ListClients">
                         <button className="btnLinkProjets btn btn-primary">Ajouter votre premier client!</button>
                         <p className="pCreerProjetAccueil">Vous avez 0 client!</p>    
                         </Link>) : (

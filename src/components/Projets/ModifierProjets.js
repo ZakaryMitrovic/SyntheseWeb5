@@ -77,7 +77,7 @@ const ModifierProjets = () => {
             membres: Membre,
             client: Client,
             admin: true,
-            dateLivrable: projetDetails.dateLivrable, //******************* */
+            dateLivrable: projetDetails.dateLivrable,
             adminID:ctx.user.uid
         }, { merge: true });
 
@@ -89,6 +89,7 @@ const ModifierProjets = () => {
             date: "Modifier le "+showTime,
             color: projetDetails.color,
             adminID: ctx.user.uid,
+            dateLivrable: projetDetails.dateLivrable,
             admin: false
             },{ merge: true });
         });

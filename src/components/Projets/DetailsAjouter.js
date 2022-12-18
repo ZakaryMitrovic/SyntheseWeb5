@@ -90,10 +90,15 @@ return(
                             </svg>
                             <div className="d-flex w-100 justify-content-between">
                                 <h5 className="titreProjetDetail">{projetDetails.nom}</h5>
-                                <small><i>{projetDetails.date}</i></small>
+                                <small>Dû le: <i>{projetDetails.dateLivrable}</i></small>
                             </div>
                     </div>
-                    <p className="mb-1">{projetDetails.description}</p>
+                    <div>
+                        <small>Membre(s): </small>
+                        {projetDetails.membres.map(({ nom, id }) => (
+                            <small key={id}>{nom}; </small>
+                        ))}
+                    </div>
                 </section>
                 
                 {/* Section pour clavardage */}
@@ -111,9 +116,9 @@ return(
                         {isPosts?.map((unpost)=> (
                         
                             <li className="post" key={unpost.id}>
-                            <blockquote>
+                            <div className="messagePost">
                                <p> {unpost.texte} </p>
-                            </blockquote>
+                            </div>
                                 <p>{unpost.auteur} <small><i>{moment(unpost.temps.toDate()).format('dddd, h:mm a')} </i></small></p>
                             </li>
 

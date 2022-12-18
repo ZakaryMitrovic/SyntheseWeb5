@@ -91,7 +91,9 @@ const CreerProjets = () => {
                     const ProjetAdded = setDoc(addedRef, {
                     nom: newProjet.nom,
                     color: newProjet.color,
+                    membres: Membre,
                     adminID: ctx.user.uid,
+                    dateLivrable: newProjet.dateLivrable,
                     admin: false
                     },{ merge: true });
 
@@ -130,7 +132,9 @@ const CreerProjets = () => {
                 description: newProjet.description,
                 date: "Créé le "+showTime,
                 color: newProjet.color,
+                membres: Membre,
                 adminID: ctx.user.uid,
+                dateLivrable: newProjet.dateLivrable,
                 admin: false
                 },{ merge: true });
             });
