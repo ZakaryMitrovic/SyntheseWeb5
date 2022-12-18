@@ -1,5 +1,5 @@
 import { useState, useContext, useEffect } from "react";
-import { onSnapshot, collection, addDoc, doc, getDoc } from 'firebase/firestore';
+import { onSnapshot, collection, addDoc, doc, getDoc, query, getDocs, orderBy, limit } from 'firebase/firestore';
 import { db } from '../../config/firebase';
 import { authContexte } from "../../Contexte/authContexte";
 import { Link } from "react-router-dom";
@@ -15,7 +15,7 @@ const TableauBord = () => {
     /*POUR LES PROJETS */
     useEffect(() => {
         const getProjet = async () => {
-            const unsub = onSnapshot(collection(db, "membres", ctx.user.uid, "projets"), (snapshot) => {
+            const unsub = onSnapshot(query(collection(db, "membres", ctx.user.uid, "projets"), orderBy("dateLivrable"), limit(5)), (snapshot) => {
               setProjets(
                 snapshot.docs.map((doc) => {
                   return {

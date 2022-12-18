@@ -118,10 +118,9 @@ const DetailsProjets = () => {
                             <div className="form-group">
                                 <label htmlFor="text">Votre message</label>
                                 <textarea className="form-control" id="text" onSubmit={submitHandler} onChange={e => updatePost(e.target.value)} required></textarea>
-                          
                             </div>
 
-                            <input onClick={submitHandler} type="submit" value="Ajouter" className='btn btn-primary' />
+                            <input type="submit" value="Ajouter" className='btn btn-primary' />
                         </form>
                         <ul>
                             {isPosts?.map((unpost) => (
